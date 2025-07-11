@@ -1,4 +1,4 @@
-﻿namespace RegistroDeAtendimento.Tests;
+﻿namespace Api.Tests;
 
 public class UnitTest1{
     [Fact]
