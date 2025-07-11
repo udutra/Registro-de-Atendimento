@@ -1,4 +1,8 @@
 ﻿<Solution>
+  <Folder Name="/git/">
+    <File Path=".gitignore" />
+    <File Path="README.md" />
+  </Folder>
   <Project Path="RegistroDeAtendimento.Api\RegistroDeAtendimento.Api.csproj" Type="Classic C#" />
   <Project Path="RegistroDeAtendimento.Application\RegistroDeAtendimento.Application.csproj" Type="Classic C#" />
   <Project Path="RegistroDeAtendimento.Domain\RegistroDeAtendimento.Domain.csproj" Type="Classic C#" />
