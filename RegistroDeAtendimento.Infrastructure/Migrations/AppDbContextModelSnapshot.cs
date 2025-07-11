@@ -60,7 +60,7 @@ namespace RegistroDeAtendimento.Infrastructure.Migrations
                         .HasColumnType("nvarchar(11)");
 
                     b.Property<DateTime>("DataNascimento")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<string>("Nome")
                         .IsRequired()

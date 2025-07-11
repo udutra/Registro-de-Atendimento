@@ -16,6 +16,10 @@ public class AppDbContext(DbContextOptions options) : DbContext(options){
                 .HasMaxLength(255);
 
             entity.Property(p => p.DataNascimento)
+                .HasConversion(
+                    v => v.ToDateTime(TimeOnly.MinValue),
+                    v => DateOnly.FromDateTime(v))
+                .HasColumnType("date")
                 .IsRequired();
 
             entity.Property(p => p.Sexo)

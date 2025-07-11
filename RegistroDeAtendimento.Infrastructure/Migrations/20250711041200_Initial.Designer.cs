@@ -12,7 +12,7 @@ using RegistroDeAtendimento.Infrastructure.Data;
 namespace RegistroDeAtendimento.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250711025705_Initial")]
+    [Migration("20250711041200_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -63,7 +63,7 @@ namespace RegistroDeAtendimento.Infrastructure.Migrations
                         .HasColumnType("nvarchar(11)");
 
                     b.Property<DateTime>("DataNascimento")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<string>("Nome")
                         .IsRequired()
