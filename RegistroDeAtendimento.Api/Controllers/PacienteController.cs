@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using RegistroDeAtendimento.Application.Dtos;
+using RegistroDeAtendimento.Application.Dtos.Responses;
 using RegistroDeAtendimento.Application.Interfaces;
+using RegistroDeAtendimento.Domain.Enums;
 
 namespace RegistroDeAtendimento.Api.Controllers;
 
@@ -9,56 +11,77 @@ namespace RegistroDeAtendimento.Api.Controllers;
 public class PacienteController(IPacienteService pacienteService) : ControllerBase{
     
     [HttpGet]
-    public async Task<IActionResult> GetAll(){
-        var pacientes = await pacienteService.ListarTodosAsync();
+    public async Task<IActionResult> GetAll(int page = ConfigurationResponse.DefaultCurrentPage, int itemsPerPage = ConfigurationResponse.DefaultPageSize, 
+        OrderByPacienteEnum orderBy = ConfigurationResponse.DefaultOrderBy, SortDirectionEnum sort = ConfigurationResponse.DefaultDirection){
+        var pacientes = await pacienteService.ListarTodosAsync(page, itemsPerPage, orderBy, sort);
         return Ok(pacientes);
     }
     
     [HttpGet("ativos")]
-    public async Task<IActionResult> GetAtivos(){
-        var pacientes = await pacienteService.ListarAtivosAsync();
+    public async Task<IActionResult> GetAtivos(int page = ConfigurationResponse.DefaultCurrentPage, int itemsPerPage = ConfigurationResponse.DefaultPageSize, 
+        OrderByPacienteEnum orderBy = ConfigurationResponse.DefaultOrderBy, SortDirectionEnum sort = ConfigurationResponse.DefaultDirection){
+        var pacientes = await pacienteService.ListarAtivosAsync(page, itemsPerPage, orderBy, sort);
         return Ok(pacientes);
     }
     
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id){
         var paciente = await pacienteService.ObterPorIdAsync(id);
-        if (paciente == null)
-            return NotFound("Paciente não encontrado.");
-
-        return Ok(paciente);
+        if (paciente.Code == 200)
+            return Ok(paciente);
+            
+        return NotFound(paciente);
     }
     
-    [HttpPost] public async Task<IActionResult> Post([FromBody] CriarPacienteDto dto)
-    {
-        var resultado = await pacienteService.CriarAsync(dto);
+    [HttpPost] 
+    public async Task<IActionResult> Post([FromBody] CriarPacienteDto dto){
+        var paciente = await pacienteService.CriarAsync(dto);
 
-        if (!resultado)
-            //return BadRequest(new { erros = resultado.Erros });
-            return BadRequest();
+        if (paciente.Data == null)
+            return paciente.Code switch{
+                409 => Conflict(paciente),
+                _ => BadRequest(paciente)
+            };
 
-        return CreatedAtAction(nameof(GetById), new { id = dto.Cpf }, dto); // ou retorne o ID criado
+        return CreatedAtAction(nameof(GetById), new { id = paciente.Data.Id }, paciente.Data);
     }
     
-    [HttpPut("{id:guid}")]
+    [HttpPut("atualizar/{id:guid}")]
     public async Task<IActionResult> Put(Guid id, [FromBody] AtualizarPacienteDto dto){
-        var resultado = await pacienteService.AtualizarAsync(id, dto);
+        var paciente = await pacienteService.AtualizarAsync(id, dto);
 
-        if (!resultado)
-            //return BadRequest(new{ erros = resultado.Erros });
-            return BadRequest();
+        if (paciente.Data == null)
+            return paciente.Code switch{
+                404 => NotFound(paciente),
+                409 => Conflict(paciente),
+                _ => BadRequest(paciente)
+            };
 
         return NoContent();
     }
     
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> Delete(Guid id)
-    {
-        var resultado = await pacienteService.InativarAsync(id);
+    [HttpPatch("inativar/{id:guid}")]
+    public async Task<IActionResult> Inativar(Guid id){
+        var paciente = await pacienteService.InativarAsync(id);
 
-        if (!resultado)
-            //return NotFound(new { erros = resultado.Erros });
-            return NotFound();
+        if (paciente.Data == null)
+            return paciente.Code switch{
+                200 => Ok(paciente.Message),
+                _ => BadRequest(paciente)
+            };
+
+        return NoContent();
+    }
+    
+    [HttpPatch("ativar/{id:guid}")]
+    public async Task<IActionResult> Ativar(Guid id){
+        var paciente = await pacienteService.AtivarAsync(id);
+
+        if (paciente.Data == null)
+            return paciente.Code switch{
+                200 => Ok(paciente.Message),
+                _ => BadRequest(paciente)
+            };
 
         return NoContent();
     }

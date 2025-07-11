@@ -7,5 +7,6 @@
   <Project Path="RegistroDeAtendimento.Application\RegistroDeAtendimento.Application.csproj" Type="Classic C#" />
   <Project Path="RegistroDeAtendimento.Domain\RegistroDeAtendimento.Domain.csproj" Type="Classic C#" />
   <Project Path="RegistroDeAtendimento.Infrastructure\RegistroDeAtendimento.Infrastructure.csproj" Type="Classic C#" />
+  <Project Path="RegistroDeAtendimento.Shared\RegistroDeAtendimento.Shared.csproj" Type="Classic C#" />
   <Project Path="RegistroDeAtendimento.Tests\RegistroDeAtendimento.Tests.csproj" Type="Classic C#" />
 </Solution>
