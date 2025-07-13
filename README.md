@@ -1,6 +1,8 @@
 # Registro de Atendimento - Clínica ACME
 
-A Clínica ACME deseja uma solução web para registrar os atendimentos realizados com seus pacientes. O sistema deve permitir o **cadastro de pacientes** e o **registro de atendimentos**, com funcionalidades de consulta, edição e filtros.
+A Clínica ACME deseja uma solução web para registrar os atendimentos realizados com seus pacientes. O sistema deve
+permitir o **cadastro de pacientes** e o **registro de atendimentos**, com funcionalidades de consulta, edição e
+filtros.
 
 ---
 
@@ -15,11 +17,11 @@ O cadastro deve conter os seguintes campos:
 - **CPF** (obrigatório e único)
 - **Sexo** (obrigatório)
 - **Endereço completo:**
-  - CEP
-  - Cidade
-  - Bairro
-  - Endereço
-  - Complemento (opcional)
+    - CEP
+    - Cidade
+    - Bairro
+    - Endereço
+    - Complemento (opcional)
 - **Status** (obrigatório – Ativo/Inativo)
 
 #### Requisitos:
@@ -46,6 +48,6 @@ Cada atendimento deve conter:
 - Cadastrar e **editar** registros de atendimento;
 - **Inativar** registros de atendimento;
 - Listar atendimentos com filtro por:
-  - **Data (período)**
-  - **Paciente**
-  - **Status**
+    - **Data (período)**
+    - **Paciente**
+    - **Status**

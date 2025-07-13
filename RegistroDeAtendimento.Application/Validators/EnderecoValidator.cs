@@ -3,10 +3,8 @@ using RegistroDeAtendimento.Domain.ValueObjects;
 
 namespace RegistroDeAtendimento.Application.Validators;
 
-public class EnderecoValidator : AbstractValidator<Endereco>
-{
-    public EnderecoValidator()
-    {
+public class EnderecoValidator : AbstractValidator<Endereco>{
+    public EnderecoValidator(){
         RuleFor(e => e.Cep)
             .NotEmpty().WithMessage("O CEP é obrigatório.");
 

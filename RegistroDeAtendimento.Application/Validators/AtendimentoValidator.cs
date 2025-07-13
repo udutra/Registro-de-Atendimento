@@ -1,11 +1,10 @@
 using FluentValidation;
 using RegistroDeAtendimento.Domain.Entities;
-using RegistroDeAtendimento.Domain.Interfaces;
 
 namespace RegistroDeAtendimento.Application.Validators;
 
-public class AtendimentoValidator: AbstractValidator<Atendimento>{
-    public AtendimentoValidator(IAtendimentoRepository atendimentoRepository){
+public class AtendimentoValidator : AbstractValidator<Atendimento>{
+    public AtendimentoValidator(){
         RuleFor(a => a.PacienteId)
             .NotEmpty()
             .WithMessage("O paciente é obrigatório.");
@@ -18,8 +17,7 @@ public class AtendimentoValidator: AbstractValidator<Atendimento>{
 
         RuleFor(a => a.Descricao)
             .NotEmpty()
-            .WithMessage("A descrição do atendimento é obrigatória.")
-            .WithMessage("A descrição é muito longa.");
+            .WithMessage("A descrição do atendimento é obrigatória.");
 
         RuleFor(a => a.Status)
             .IsInEnum()

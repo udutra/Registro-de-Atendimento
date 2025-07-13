@@ -5,6 +5,10 @@
       <w>dtos</w>
       <w>endereco</w>
       <w>enderecos</w>
+      <w>numeros</w>
+      <w>obrigatorios</w>
+      <w>validacao</w>
+      <w>áéíóú</w>
     </words>
   </dictionary>
 </component>

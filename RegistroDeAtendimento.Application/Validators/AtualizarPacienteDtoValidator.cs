@@ -11,7 +11,8 @@ public class AtualizarPacienteDtoValidator : AbstractValidator<AtualizarPaciente
 
         RuleFor(p => p.DataNascimento)
             .NotEmpty().WithMessage("A data de nascimento é obrigatória.")
-            .LessThan(DateOnly.FromDateTime(DateTime.Today)).WithMessage("A data de nascimento deve ser anterior à data atual.");
+            .LessThan(DateOnly.FromDateTime(DateTime.Today))
+            .WithMessage("A data de nascimento deve ser anterior à data atual.");
 
         RuleFor(p => p.Sexo)
             .IsInEnum().WithMessage("Sexo inválido.");

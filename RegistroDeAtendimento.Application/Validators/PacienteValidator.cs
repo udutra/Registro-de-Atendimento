@@ -15,7 +15,7 @@ public class PacienteValidator : AbstractValidator<Paciente>{
         RuleFor(p => p.Cpf)
             .NotEmpty().WithMessage("O CPF é obrigatório.")
             .Matches(@"^\d{11}$").WithMessage("O CPF deve conter 11 dígitos numéricos.")
-            .Must(cpf => !pacienteRepository.ExisteCpfAsync(cpf).Result)
+            .MustAsync(async (cpf, cancellation) => !await pacienteRepository.ExisteCpfAsync(cpf))
             .WithMessage("Já existe um paciente com este CPF.");
 
         RuleFor(p => p.Sexo)

@@ -7,16 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Migrations\" />
+        <Folder Include="Migrations\"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.7" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.7"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RegistroDeAtendimento.Application\RegistroDeAtendimento.Application.csproj" />
-      <ProjectReference Include="..\RegistroDeAtendimento.Domain\RegistroDeAtendimento.Domain.csproj" />
+        <ProjectReference Include="..\RegistroDeAtendimento.Application\RegistroDeAtendimento.Application.csproj"/>
+        <ProjectReference Include="..\RegistroDeAtendimento.Domain\RegistroDeAtendimento.Domain.csproj"/>
     </ItemGroup>
 
 </Project>

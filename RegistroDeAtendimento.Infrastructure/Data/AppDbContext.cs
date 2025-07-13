@@ -4,9 +4,9 @@ using RegistroDeAtendimento.Domain.Entities;
 namespace RegistroDeAtendimento.Infrastructure.Data;
 
 public class AppDbContext(DbContextOptions options) : DbContext(options){
-    public DbSet<Paciente> Pacientes { get; set; }
-    public DbSet<Atendimento> Antedimentos { get; set; }
-    
+    public DbSet<Paciente> Pacientes{ get; set; }
+    public DbSet<Atendimento> Antedimentos{ get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder){
         modelBuilder.Entity<Paciente>(entity => {
             entity.HasKey(p => p.Id);
@@ -28,12 +28,11 @@ public class AppDbContext(DbContextOptions options) : DbContext(options){
             entity.Property(p => p.Cpf)
                 .IsRequired()
                 .HasMaxLength(11);
-            
+
             entity.Property(p => p.Status)
                 .IsRequired();
-
         });
-        
+
         modelBuilder.Entity<Paciente>().OwnsOne(p => p.Endereco, endereco => {
             endereco.Property(e => e.Cep).HasColumnName("Cep");
             endereco.Property(e => e.Cidade).HasColumnName("Cidade");
@@ -41,7 +40,7 @@ public class AppDbContext(DbContextOptions options) : DbContext(options){
             endereco.Property(e => e.Logradouro).HasColumnName("Logradouro");
             endereco.Property(e => e.Complemento).HasColumnName("Complemento").IsRequired(false);
         });
-        
+
         modelBuilder.Entity<Atendimento>(entity => {
             entity.HasKey(a => a.Id);
 
@@ -55,7 +54,7 @@ public class AppDbContext(DbContextOptions options) : DbContext(options){
                 .WithMany(p => p.Atendimentos)
                 .HasForeignKey(a => a.PacienteId);
         });
-        
+
         base.OnModelCreating(modelBuilder);
     }
 }

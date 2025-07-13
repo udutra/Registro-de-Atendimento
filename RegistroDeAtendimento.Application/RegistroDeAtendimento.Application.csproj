@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RegistroDeAtendimento.Domain\RegistroDeAtendimento.Domain.csproj" />
+        <ProjectReference Include="..\RegistroDeAtendimento.Domain\RegistroDeAtendimento.Domain.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentValidation" Version="12.0.0" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.7" />
+        <PackageReference Include="FluentValidation" Version="12.0.0"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.7"/>
     </ItemGroup>
 
 </Project>
