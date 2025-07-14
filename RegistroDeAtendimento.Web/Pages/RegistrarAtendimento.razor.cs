@@ -8,6 +8,7 @@ namespace RegistroDeAtendimento.Web.Pages;
 
 public partial class RegistrarAtendimento : ComponentBase{
     [Inject] ISnackbar Snackbar { get; set; }
+    [Inject] private NavigationManager NavigationManager{ get; set; } = null!;
     [Inject] private IAtendimentoService AtendimentoService { get; set; } = null!; 
     private MudForm _form;
 
@@ -31,6 +32,7 @@ public partial class RegistrarAtendimento : ComponentBase{
 
                 if (response.IsSuccess){
                     Snackbar.Add("Atendimento registrado com sucesso!", Severity.Success);
+                    NavigationManager.NavigateTo($"/listar-atendimentos");
                 }
                 else{
                     Snackbar.Add($"Erro ao acionar o Atendimento: {response.Message}", Severity.Error);

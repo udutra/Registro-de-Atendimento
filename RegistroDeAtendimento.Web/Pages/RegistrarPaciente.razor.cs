@@ -9,7 +9,8 @@ namespace RegistroDeAtendimento.Web.Pages;
 
 public partial class RegistrarPaciente : ComponentBase{
     [Inject] ISnackbar Snackbar { get; set; }
-    [Inject] private IPacienteService ProdutoService { get; set; } = null!; 
+    [Inject] private NavigationManager NavigationManager{ get; set; } = null!;
+    [Inject] private IPacienteService PacienteService { get; set; } = null!; 
     private MudForm _form;
 
     private CriarPacienteDto Paciente { get; set; } = new();
@@ -25,10 +26,11 @@ public partial class RegistrarPaciente : ComponentBase{
             var validationResult = await _criarPacienteDtoValidator.ValidateAsync(Paciente);
             if(_form.IsValid && validationResult.IsValid){
                 
-                var response = await ProdutoService.CriarPacienteAsync(Paciente);
+                var response = await PacienteService.CriarPacienteAsync(Paciente);
 
                 if (response.IsSuccess){
                     Snackbar.Add("Paciente registrado com sucesso!", Severity.Success);
+                    NavigationManager.NavigateTo($"/listar-pacientes");
                 }
                 else{
                     Snackbar.Add($"Erro ao acionar o paciente: {response.Message}", Severity.Error);

@@ -1,0 +1,65 @@
+version: '3.9'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver-dev
+    ports:
+      - "1500:1433"
+    environment:
+      SA_PASSWORD: "1q2w3e4r@#$"
+      ACCEPT_EULA: "Y"
+    networks:
+      - mynw
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: [ "CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "1q2w3e4r@#$", "-Q", "SELECT 1", "-C" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  registrodeatendimento-api:
+    build:
+      context: .
+      dockerfile: RegistroDeAtendimento.Api/Dockerfile
+    image: registrodeatendimento.api
+    container_name: registrodeatendimento-api
+    ports:
+      - "5223:5223"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Release
+      - ASPNETCORE_URLS=http://+:5223
+      - ConnectionStrings__DefaultConnection=Server=sqlserver-dev,1433;Database=RegistroDeAtendimento;User ID=sa;Password=1q2w3e4r@#$;Encrypt=False;TrustServerCertificate=True;
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    networks:
+      - mynw
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:5223/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+      
+  registrodeatendimento-web:
+    build:
+      context: .
+      dockerfile: RegistroDeAtendimento.Web/Dockerfile
+    image: registrodeatendimento.web
+    container_name: registrodeatendimento-web
+    ports:
+      - "5248:5248"
+    depends_on:
+      registrodeatendimento-api:
+        condition: service_healthy
+    networks:
+      - mynw
+
+volumes:
+  sqlserver_data:     
+networks:
+  mynw:
+    driver: bridge

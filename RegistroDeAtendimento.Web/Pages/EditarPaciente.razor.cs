@@ -16,15 +16,14 @@ public partial class EditarPaciente : ComponentBase{
     [Inject] private ISnackbar Snackbar{ get; set; }
     private MudForm _form;
     [Inject] AtualizarPacienteDtoValidator _atualizarPacienteDtoValidator{ get; set; }
-    [Inject] private IPacienteService ProdutoService{ get; set; } = null!;
+    [Inject] private IPacienteService PacienteService{ get; set; } = null!;
     private SexoEnum SexoSelecionado{ get; set; }
     private DateTime? _date{ get; set; }
 
 
-
-
+    
     protected override async Task<Task> OnInitializedAsync(){
-        var response = await ProdutoService.ObterPacientePorIdAsync(Id);
+        var response = await PacienteService.ObterPacientePorIdAsync(Id);
         AtualizaPaciente(response);
         return base.OnInitializedAsync();
         
@@ -56,7 +55,7 @@ public partial class EditarPaciente : ComponentBase{
             
             var validationResult = await _atualizarPacienteDtoValidator.ValidateAsync(paciente);
             if (_form.IsValid && validationResult.IsValid){
-                var response = await ProdutoService.AtualizarPacienteAsync(Id, paciente);
+                var response = await PacienteService.AtualizarPacienteAsync(Id, paciente);
                 if (response.IsSuccess){
                     Snackbar.Add("Paciente atualizado com sucesso!", Severity.Success);
                     NavigationManager.NavigateTo($"/listar-pacientes");

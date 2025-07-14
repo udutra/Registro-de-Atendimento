@@ -33,7 +33,7 @@ namespace RegistroDeAtendimento.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Antedimentos",
+                name: "Atendimentos",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -44,9 +44,9 @@ namespace RegistroDeAtendimento.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Antedimentos", x => x.Id);
+                    table.PrimaryKey("PK_Atendimentos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Antedimentos_Pacientes_PacienteId",
+                        name: "FK_Atendimentos_Pacientes_PacienteId",
                         column: x => x.PacienteId,
                         principalTable: "Pacientes",
                         principalColumn: "Id",
@@ -54,8 +54,8 @@ namespace RegistroDeAtendimento.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Antedimentos_PacienteId",
-                table: "Antedimentos",
+                name: "IX_Atendimentos_PacienteId",
+                table: "Atendimentos",
                 column: "PacienteId");
         }
 
@@ -63,7 +63,7 @@ namespace RegistroDeAtendimento.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Antedimentos");
+                name: "Atendimentos");
 
             migrationBuilder.DropTable(
                 name: "Pacientes");

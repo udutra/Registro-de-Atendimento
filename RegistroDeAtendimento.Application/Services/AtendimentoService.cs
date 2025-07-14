@@ -15,11 +15,16 @@ public class AtendimentoService(IAtendimentoRepository repository, IPacienteRepo
     public async Task<PagedResponse<List<AtendimentoResponseDto>>> ListarAtendimentosAsync(ListarAtendimentosDto dto){
         var query = repository.ObterTodosAtendimentos();
 
+        if (dto.Id.HasValue)
+            query = query.Where(a => a.Id == dto.Id.Value);
+        
         if (dto.DataInicio.HasValue)
             query = query.Where(a => a.DataHora >= dto.DataInicio.Value);
 
-        if (dto.DataFim.HasValue)
-            query = query.Where(a => a.DataHora <= dto.DataFim.Value);
+        if (dto.DataFim.HasValue){
+            var dataFim = dto.DataFim.Value.AddDays(1);
+            query = query.Where(a => a.DataHora < dataFim);
+        }
 
         if (dto.PacienteId.HasValue)
             query = query.Where(a => a.PacienteId == dto.PacienteId.Value);

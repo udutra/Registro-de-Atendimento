@@ -8,6 +8,7 @@ public class ListarAtendimentosDto{
     public int PageSize { get; set; } = ConfigurationResponse.DefaultPageSize;
     public OrderByAtendimentoEnum? OrderBy { get; set; } = null;
     public SortDirectionEnum? Sort { get; set; } = null;
+    public Guid? Id { get; set; } = null;
     public Guid? PacienteId { get; set; } = null;
     public string? PacienteNome { get; set; } = null;
     public string? PacienteCpf { get; set; } = null;

@@ -46,12 +46,17 @@ public class Program{
         });
 
         var app = builder.Build();
-
-        if (app.Environment.IsDevelopment()){
-            app.UseSwagger();
-            app.UseSwaggerUI();
+        
+        app.UseSwagger();
+        app.UseSwaggerUI();
+        
+        using (var scope = app.Services.CreateScope()){
+            var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            dbContext.Database.Migrate();
         }
+        
         app.UseCors("AllowFrontend");
+        app.MapGet("/health", () => "Api OK!");
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.MapControllers();

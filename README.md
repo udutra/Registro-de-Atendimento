@@ -51,3 +51,69 @@ Cada atendimento deve conter:
     - **Data (período)**
     - **Paciente**
     - **Status**
+
+---
+
+## 🚀 Como Executar
+
+### Pré-requisitos
+
+- [Docker](https://www.docker.com/get-started) instalado
+- [Docker Compose](https://docs.docker.com/compose/install/) instalado
+
+### Execução com Docker
+
+1. **Clone o repositório:**
+   ```bash
+   git clone <url-do-repositorio>
+   cd RegistroDeAtendimento
+   ```
+
+2. **Execute o projeto com Docker Compose:**
+   ```bash
+   docker-compose up -d
+   ```
+
+3. **Aguarde a inicialização dos serviços:**
+   - SQL Server (porta 1500)
+   - API (porta 5223)
+   - Aplicação Web (porta 5248)
+
+4. **Acesse a aplicação:**
+   - **Interface Web:** http://localhost:5248
+   - **API:** http://localhost:5223
+   - **SQL Server:** localhost:1500
+
+### Estrutura dos Serviços
+
+O projeto utiliza os seguintes containers:
+
+- **sqlserver-dev:** Banco de dados SQL Server 2022
+- **registrodeatendimento-api:** API REST em .NET
+- **registrodeatendimento-web:** Interface web em Blazor
+
+### Comandos Úteis
+
+```bash
+# Parar todos os serviços
+docker-compose down
+
+# Parar e remover volumes (dados do banco)
+docker-compose down -v
+
+# Ver logs dos serviços
+docker-compose logs -f
+
+# Reconstruir imagens
+docker-compose up --build -d
+```
+
+### Configurações
+
+- **Banco de dados:** SQL Server 2022
+- **Senha do SA:** 1q2w3e4r@#$
+- **Porta do SQL Server:** 1500
+- **Porta da API:** 5223
+- **Porta da Web:** 5248
+
+---

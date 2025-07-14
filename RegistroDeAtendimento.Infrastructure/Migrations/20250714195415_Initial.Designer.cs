@@ -12,7 +12,7 @@ using RegistroDeAtendimento.Infrastructure.Data;
 namespace RegistroDeAtendimento.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250711041200_Initial")]
+    [Migration("20250714195415_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace RegistroDeAtendimento.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("RegistroDeAtendimento.Domain.Entities.Atendimento", b =>
+            modelBuilder.Entity("RegistroDeAtendimento.Core.Domain.Entities.Atendimento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,10 +48,10 @@ namespace RegistroDeAtendimento.Infrastructure.Migrations
 
                     b.HasIndex("PacienteId");
 
-                    b.ToTable("Antedimentos");
+                    b.ToTable("Atendimentos");
                 });
 
-            modelBuilder.Entity("RegistroDeAtendimento.Domain.Entities.Paciente", b =>
+            modelBuilder.Entity("RegistroDeAtendimento.Core.Domain.Entities.Paciente", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,9 +81,9 @@ namespace RegistroDeAtendimento.Infrastructure.Migrations
                     b.ToTable("Pacientes");
                 });
 
-            modelBuilder.Entity("RegistroDeAtendimento.Domain.Entities.Atendimento", b =>
+            modelBuilder.Entity("RegistroDeAtendimento.Core.Domain.Entities.Atendimento", b =>
                 {
-                    b.HasOne("RegistroDeAtendimento.Domain.Entities.Paciente", "Paciente")
+                    b.HasOne("RegistroDeAtendimento.Core.Domain.Entities.Paciente", "Paciente")
                         .WithMany("Atendimentos")
                         .HasForeignKey("PacienteId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -92,9 +92,9 @@ namespace RegistroDeAtendimento.Infrastructure.Migrations
                     b.Navigation("Paciente");
                 });
 
-            modelBuilder.Entity("RegistroDeAtendimento.Domain.Entities.Paciente", b =>
+            modelBuilder.Entity("RegistroDeAtendimento.Core.Domain.Entities.Paciente", b =>
                 {
-                    b.OwnsOne("RegistroDeAtendimento.Domain.ValueObjects.Endereco", "Endereco", b1 =>
+                    b.OwnsOne("RegistroDeAtendimento.Core.Domain.ValueObjects.Endereco", "Endereco", b1 =>
                         {
                             b1.Property<Guid>("PacienteId")
                                 .HasColumnType("uniqueidentifier");
@@ -135,7 +135,7 @@ namespace RegistroDeAtendimento.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RegistroDeAtendimento.Domain.Entities.Paciente", b =>
+            modelBuilder.Entity("RegistroDeAtendimento.Core.Domain.Entities.Paciente", b =>
                 {
                     b.Navigation("Atendimentos");
                 });

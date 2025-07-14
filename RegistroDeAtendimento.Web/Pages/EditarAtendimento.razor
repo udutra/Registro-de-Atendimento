@@ -1,0 +1,16 @@
+@page "/editar-atendimento/{id:guid}"
+
+<MudPaper Class="pa-4">
+    <MudText Typo="Typo.h5">Editar Atendimento</MudText>
+    
+    <MudForm Model="@AtualizarAtendimentoDto" @ref="_form" Validation="@(_atualizarAtendimentoDtoValidator.ValidateValue)" ValidationDelay="0">
+        <MudTextField @bind-Value="AtualizarAtendimentoDto.PacienteId" Label="Id do Paciente" Immediate="true" For="@(() => AtualizarAtendimentoDto.PacienteId)" />
+        <MudDatePicker Label="Data do Atendimento" @bind-Date="@_date"/>
+       
+        <MudTimePicker Label="Horario do Atendimento" @bind-Time="_time" />
+        <MudTextField @bind-Value="AtualizarAtendimentoDto.Descricao" Label="Descrição" Immediate="true" For="@(() => AtualizarAtendimentoDto.Descricao)" />
+
+        <MudButton OnClick="@(() => Atualizar(AtualizarAtendimentoDto))" Color="Color.Primary">Atualizar</MudButton>
+    </MudForm>
+    
+</MudPaper>

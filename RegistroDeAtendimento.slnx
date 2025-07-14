@@ -1,4 +1,9 @@
 ﻿<Solution>
+  <Folder Name="/Docker/">
+    <File Path="docker-compose.yml" />
+    <File Path=".dockerignore" />
+    <File Path="nginx.conf" />
+  </Folder>
   <Folder Name="/git/">
     <File Path=".gitignore" />
     <File Path="README.md" />

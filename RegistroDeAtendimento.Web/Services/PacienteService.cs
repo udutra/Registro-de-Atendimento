@@ -45,8 +45,7 @@ public class PacienteService(IHttpClientFactory httpClientFactory) : IPacienteSe
         return responseContent ?? new Response<PacienteResponseDto?>(null, 500, "Erro interno no servidor");
     }
     
-    public async Task<Response<PacienteResponseDto?>> AtualizarPacienteAsync(Guid id, AtualizarPacienteDto dto)
-    {
+    public async Task<Response<PacienteResponseDto?>> AtualizarPacienteAsync(Guid id, AtualizarPacienteDto dto){
         var httpResponse = await _httpClient.PutAsJsonAsync($"api/paciente/atualizar/{id}", dto);
 
         if (httpResponse.StatusCode == System.Net.HttpStatusCode.NoContent){

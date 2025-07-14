@@ -23,4 +23,10 @@ public class AtualizarAtendimentoDtoValidator : AbstractValidator<AtualizarAtend
                 .MaximumLength(5000).WithMessage("A descrição é muito longa.");
         });
     }
+    
+    public Func<AtualizarAtendimentoDto, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) => {
+        var result = await ValidateAsync(ValidationContext<AtualizarAtendimentoDto>.CreateWithOptions(model, 
+            x => x.IncludeProperties(propertyName)));
+        return result.IsValid ? [] : result.Errors.Select(e => e.ErrorMessage);
+    };
 }
