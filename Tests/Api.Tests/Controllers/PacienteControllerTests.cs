@@ -88,7 +88,7 @@ public class PacienteControllerTests : IClassFixture<CustomWebApplicationFactory
     {
         var pacienteDto = new CriarPacienteDto
         {
-            Nome = "", 
+            Nome = "", // Nome inválido
             DataNascimento = new DateOnly(1985, 5, 5),
             Cpf = "",
             Sexo = SexoEnum.Masculino,
@@ -127,7 +127,7 @@ public class PacienteControllerTests : IClassFixture<CustomWebApplicationFactory
         {
             Nome = "Paciente 2",
             DataNascimento = new DateOnly(1992, 2, 2),
-            Cpf = cpfDuplicado,
+            Cpf = cpfDuplicado, // Mesmo CPF
             Sexo = SexoEnum.Feminino,
             Cep = "87654321",
             Cidade = "Cidade",

@@ -49,13 +49,18 @@ public class PacienteService(IHttpClientFactory httpClientFactory) : IPacienteSe
     {
         var httpResponse = await _httpClient.PutAsJsonAsync($"api/paciente/atualizar/{id}", dto);
 
-        if (httpResponse.StatusCode == System.Net.HttpStatusCode.NoContent){
-            
+        // VERIFIQUE O STATUS ANTES DE TENTAR LER O CORPO!
+        if (httpResponse.StatusCode == System.Net.HttpStatusCode.NoContent) // Status é 204?
+        {
+            // Sim, é 204. A operação foi um sucesso. Crie uma resposta de sucesso manualmente.
             return new Response<PacienteResponseDto?>(null, 204, "Paciente atualizado com sucesso!");
         }
-        
+
+        // Para qualquer outro caso (erro 400, 500 ou sucesso 200 com dados),
+        // o corpo da resposta deve existir, então podemos ler e deserializar.
         var json = await httpResponse.Content.ReadAsStringAsync();
 
+        // Verificação de segurança para corpos vazios inesperados
         if (string.IsNullOrEmpty(json))
         {
             return new Response<PacienteResponseDto?>(null, (int)httpResponse.StatusCode, "A resposta da API foi vazia ou inválida.");

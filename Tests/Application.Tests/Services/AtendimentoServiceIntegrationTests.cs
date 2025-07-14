@@ -93,7 +93,7 @@ public class AtendimentoServiceIntegrationTests : TestBase
         var atendimento = await CriarAtendimentoAsync();
         var dto = new AtualizarAtendimentoDto
         {
-            PacienteId = atendimento!.PacienteId,
+            PacienteId = atendimento!.PacienteId, // Corrigido: usa o paciente existente
             DataHora = DateTime.Now,
             Descricao = "Retorno agendado"
         };

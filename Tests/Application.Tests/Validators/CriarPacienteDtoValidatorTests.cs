@@ -191,7 +191,7 @@ public class CriarPacienteDtoValidatorTests{
         var dto = CriarDtoValido();
         dto.Cep = "12345-678";
 
-        dto.Cep.Should().Be("12345678");
+        dto.Cep.Should().Be("12345678"); // sem o traço
     }
 
     [Fact]
