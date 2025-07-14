@@ -49,12 +49,14 @@ public class Program{
         
         app.UseSwagger();
         app.UseSwaggerUI();
-        
-        using (var scope = app.Services.CreateScope()){
-            var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            dbContext.Database.Migrate();
+
+        if (!builder.Environment.IsEnvironment("Testing")){
+            using (var scope = app.Services.CreateScope()){
+                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                dbContext.Database.Migrate();
+            }
         }
-        
+
         app.UseCors("AllowFrontend");
         app.MapGet("/health", () => "Api OK!");
         app.UseHttpsRedirection();
