@@ -14,7 +14,7 @@ public class AtualizarAtendimentoDtoValidator : AbstractValidator<AtualizarAtend
 
         When(x => x.DataHora.HasValue, () => {
             RuleFor(x => x.DataHora.Value)
-                .Must(data => data <= DateTime.UtcNow)
+                .Must(data => data <= DateTime.Now)
                 .WithMessage("A data e hora não podem estar no futuro.");
         });
 

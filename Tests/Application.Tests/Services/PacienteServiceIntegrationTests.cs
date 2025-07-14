@@ -42,7 +42,7 @@ public class PacienteServiceIntegrationTests : TestBase{
         resultado.Data!.Nome.Should().Be("Maria Silva");
         resultado.Data.Cpf.Should().Be("98765432100");
         resultado.Data.Sexo.Should().Be(SexoEnum.Feminino);
-        resultado.Data.Endereco.Cidade.Should().Be("São Paulo");
+        resultado.Data.Cidade.Should().Be("São Paulo");
     }
 
     [Fact]

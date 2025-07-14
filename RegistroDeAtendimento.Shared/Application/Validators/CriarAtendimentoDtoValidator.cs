@@ -10,7 +10,7 @@ public class CriarAtendimentoDtoValidator : AbstractValidator<CriarAtendimentoDt
 
         RuleFor(x => x.DataHora)
             .NotEmpty().WithMessage("A data e hora são obrigatórias.")
-            .Must(data => data <= DateTime.UtcNow)
+            .Must(data => data <= DateTime.Now)
             .WithMessage("A data e hora não podem estar no futuro.");
 
         RuleFor(x => x.Descricao)
@@ -20,4 +20,10 @@ public class CriarAtendimentoDtoValidator : AbstractValidator<CriarAtendimentoDt
         RuleFor(x => x.Status)
             .IsInEnum().WithMessage("Status inválido.");
     }
+    
+    public Func<CriarAtendimentoDto, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) => {
+        var result = await ValidateAsync(ValidationContext<CriarAtendimentoDto>.CreateWithOptions(model, 
+            x => x.IncludeProperties(propertyName)));
+        return result.IsValid ? [] : result.Errors.Select(e => e.ErrorMessage);
+    };
 }

@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
@@ -10,10 +11,14 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// ✅ Define o valor ANTES de usar
+var culture = new CultureInfo("pt-BR");
+CultureInfo.DefaultThreadCurrentCulture   = culture;
+CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+builder.Services.AddLocalization();
+
 Configuration.BackendUrl = builder.Configuration.GetValue<string>("BackendUrl") ?? "http://localhost:5223";
 
-// ✅ Usa BackendUrl agora que já está preenchida
 builder.Services.AddScoped(sp => new HttpClient
 {
     BaseAddress = new Uri(Configuration.BackendUrl)
@@ -21,11 +26,14 @@ builder.Services.AddScoped(sp => new HttpClient
 
 builder.Services.AddMudServices();
 
-// HttpClient nomeado (opcional, se estiver usando IHttpClientFactory)
 builder.Services.AddHttpClient(Configuration.HttpClientName, opt =>
     opt.BaseAddress = new Uri(Configuration.BackendUrl));
 
 builder.Services.AddScoped<CriarPacienteDtoValidator>();
+builder.Services.AddScoped<CriarAtendimentoDtoValidator>();
+builder.Services.AddScoped<AtualizarPacienteDtoValidator>();
+builder.Services.AddScoped<AtualizarAtendimentoDtoValidator>();
 builder.Services.AddTransient<IPacienteService, PacienteService>();
+builder.Services.AddTransient<IAtendimentoService, AtendimentoService>();
 
 await builder.Build().RunAsync();

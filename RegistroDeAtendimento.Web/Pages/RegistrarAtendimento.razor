@@ -1,0 +1,25 @@
+@page "/registrar-atendimento"
+@using RegistroDeAtendimento.Core.Domain.Enums
+
+<MudPaper Class="pa-4">
+    <MudText Typo="Typo.h5">Registrar Atendimento</MudText>
+    
+    <MudForm Model="@Atendimento" @ref="_form" Validation="@(_criarAtendimentoDtoValidator.ValidateValue)" ValidationDelay="0">
+        <MudTextField @bind-Value="Atendimento.PacienteId" Label="Paciente Id" Immediate="true" For="@(() => Atendimento.PacienteId)" />
+        
+        
+        <MudDatePicker Label="Data do Atendimento" @bind-Date="@_date" DateFormat="dd/MM/yyyy"/>
+        <MudTimePicker Label="Horas" @bind-Time="_time" />
+        
+        
+        <MudTextField @bind-Value="Atendimento.Descricao" Label="Descrição" Immediate="true" For="@(() => Atendimento.Descricao)" />
+        <MudRadioGroup T="StatusEnum" @bind-Value="Atendimento.Status" For="@(() => Atendimento.Status)">
+            @foreach (StatusEnum item in Enum.GetValues(typeof(StatusEnum)))
+            {
+                <MudRadio T="StatusEnum" Value="@item">@item.ToString()</MudRadio>
+            }
+        </MudRadioGroup>
+        
+        <MudButton OnClick="@Submit" Color="Color.Primary">Registrar</MudButton>
+    </MudForm>
+</MudPaper>

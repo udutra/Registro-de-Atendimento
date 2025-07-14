@@ -1,0 +1,27 @@
+@page "/editar-paciente/{id:guid}"
+@using RegistroDeAtendimento.Core.Domain.Enums
+<MudPaper Class="pa-4">
+    <MudText Typo="Typo.h5">Editar Paciente - @NomePaciente</MudText>
+    
+ 
+    
+    else{
+        <MudForm Model="@AtualizarPacienteDto" @ref="_form" Validation="@(_atualizarPacienteDtoValidator.ValidateValue)" ValidationDelay="0">
+            <MudTextField @bind-Value="AtualizarPacienteDto.Nome" Label="Nome" Immediate="true" For="@(() => AtualizarPacienteDto.Nome)" />
+            <MudTextField @bind-Value="AtualizarPacienteDto.Cpf" Label="Cpf" Immediate="true" For="@(() => AtualizarPacienteDto.Cpf)" />
+            <MudDatePicker Label="Data de Nascimento" @bind-Date="@_date"/>
+            <MudRadioGroup T="SexoEnum" @bind-Value="SexoSelecionado">
+                @foreach (SexoEnum item in Enum.GetValues(typeof(SexoEnum))){
+                    <MudRadio T="SexoEnum" Value="@item">@item.ToString()</MudRadio>
+                }
+            </MudRadioGroup>
+            <MudTextField @bind-Value="AtualizarPacienteDto.Cep" Label="Cep" Immediate="true" For="@(() => AtualizarPacienteDto.Cep)" />
+            <MudTextField @bind-Value="AtualizarPacienteDto.Cidade" Label="Cidade" Immediate="true" For="@(() => AtualizarPacienteDto.Cidade)" />
+            <MudTextField @bind-Value="AtualizarPacienteDto.Bairro" Label="Bairro" Immediate="true" For="@(() => AtualizarPacienteDto.Bairro)" />
+            <MudTextField @bind-Value="AtualizarPacienteDto.Logradouro" Label="Logradouro" Immediate="true" For="@(() => AtualizarPacienteDto.Logradouro)" />
+            <MudTextField @bind-Value="AtualizarPacienteDto.Complemento" Label="Complemento" Immediate="true" For="@(() => AtualizarPacienteDto.Complemento)" />
+        
+            <MudButton OnClick="@(() => Atualizar(AtualizarPacienteDto))" Color="Color.Primary">Atualizar</MudButton>
+        </MudForm>
+    }
+</MudPaper>
