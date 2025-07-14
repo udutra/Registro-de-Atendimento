@@ -5,8 +5,10 @@ namespace RegistroDeAtendimento.Application.Validators;
 
 public class EnderecoValidator : AbstractValidator<Endereco>{
     public EnderecoValidator(){
-        RuleFor(e => e.Cep)
-            .NotEmpty().WithMessage("O CEP é obrigatório.");
+        RuleFor(p => p.Cep)
+            .NotEmpty().WithMessage("O CEP é obrigatório.")
+            .Length(8).WithMessage("O CEP deve conter 8 dígitos.")
+            .Matches(@"^\d{8}$").WithMessage("O CEP deve conter apenas números.");
 
         RuleFor(e => e.Cidade)
             .NotEmpty().WithMessage("A cidade é obrigatória.");

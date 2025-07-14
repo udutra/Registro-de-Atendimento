@@ -5,7 +5,7 @@ namespace RegistroDeAtendimento.Infrastructure.Data;
 
 public class AppDbContext(DbContextOptions options) : DbContext(options){
     public DbSet<Paciente> Pacientes{ get; set; }
-    public DbSet<Atendimento> Antedimentos{ get; set; }
+    public DbSet<Atendimento> Atendimentos{ get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder){
         modelBuilder.Entity<Paciente>(entity => {

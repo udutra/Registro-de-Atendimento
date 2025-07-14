@@ -80,7 +80,7 @@ public class PacienteService(IPacienteRepository repository, IValidator<CriarPac
         if (paciente is null)
             return new Response<Paciente?>(null, 404, "Paciente não encontrado.");
 
-        if (await repository.ExisteCpfAsync(dto.Cpf, paciente.Id))
+        if (dto.Cpf != null && await repository.ExisteCpfAsync(dto.Cpf, id))
             return new Response<Paciente?>(null, 409, "Já existe um paciente com esse CPF.");
 
         var validation = await atualizarValidator.ValidateAsync(dto);
@@ -88,10 +88,20 @@ public class PacienteService(IPacienteRepository repository, IValidator<CriarPac
         if (!validation.IsValid)
             return new Response<Paciente?>(null, 400, string.Join("; ", validation.Errors.Select(e => e.ErrorMessage)));
 
-        paciente.AtualizarDados(dto.Nome, cpf: dto.Cpf, dataNascimento: dto.DataNascimento, sexo: dto.Sexo,
-            endereco: new Endereco(dto.Cep,
-                dto.Cidade, dto.Bairro, dto.Logradouro, dto.Complemento), status: dto.Status);
-
+        paciente.AtualizarDados(
+            !string.IsNullOrWhiteSpace(dto.Nome) ? dto.Nome : paciente.Nome,
+            dto.DataNascimento ?? paciente.DataNascimento,
+            !string.IsNullOrWhiteSpace(dto.Cpf) ? dto.Cpf : paciente.Cpf,
+            dto.Sexo ?? paciente.Sexo,
+            new Endereco(
+                !string.IsNullOrWhiteSpace(dto.Cep) ? dto.Cep : paciente.Endereco.Cep,
+                !string.IsNullOrWhiteSpace(dto.Cidade) ? dto.Cidade : paciente.Endereco.Cidade,
+                !string.IsNullOrWhiteSpace(dto.Bairro) ? dto.Bairro : paciente.Endereco.Bairro,
+                !string.IsNullOrWhiteSpace(dto.Logradouro) ? dto.Logradouro : paciente.Endereco.Logradouro,
+                !string.IsNullOrWhiteSpace(dto.Complemento) ? dto.Complemento : paciente.Endereco.Complemento
+            )
+        );
+        
         await repository.AtualizarPacienteAsync(paciente);
 
         return new Response<Paciente?>(null, 204, "Paciente atualizado com sucesso.");
@@ -103,7 +113,7 @@ public class PacienteService(IPacienteRepository repository, IValidator<CriarPac
             return new Response<Paciente?>(null, 404, "Paciente não encontrado.");
 
         if (paciente.Status != StatusEnum.Ativo)
-            return new Response<Paciente?>(null, 200, "Paciente ja está Inativo.");
+            return new Response<Paciente?>(null, 200, "Paciente já está Inativo.");
         
         paciente.AlterarStatus(StatusEnum.Inativo);
         await repository.AtualizarPacienteAsync(paciente);
@@ -116,7 +126,7 @@ public class PacienteService(IPacienteRepository repository, IValidator<CriarPac
             return new Response<Paciente?>(null, 404, "Paciente não encontrado.");
 
         if (paciente.Status != StatusEnum.Inativo)
-            return new Response<Paciente?>(null, 200, "Paciente ja está Ativo.");
+            return new Response<Paciente?>(null, 200, "Paciente já está Ativo.");
 
         paciente.AlterarStatus(StatusEnum.Ativo);
         await repository.AtualizarPacienteAsync(paciente);

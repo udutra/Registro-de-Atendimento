@@ -10,11 +10,7 @@ public class EnderecoValidatorTests{
     [Fact]
     public void Deve_Passar_Quando_Endereco_E_Valido(){
         var endereco = new Endereco("12345678", "Porto Alegre", "Centro", "Rua das Flores, 123", "Ap 101");
-
-
         var resultado = _validator.TestValidate(endereco);
-
-
         resultado.ShouldNotHaveAnyValidationErrors();
     }
 
@@ -80,14 +76,7 @@ public class EnderecoValidatorTests{
         resultado.ShouldNotHaveValidationErrorFor(x => x.Complemento);
     }
 
-    [Fact]
-    public void Deve_Passar_Quando_CEP_Tem_Formato_Com_Tracos(){
-        var endereco = new Endereco("12345-678", "Porto Alegre", "Centro", "Rua das Flores, 123", "Ap 101");
-        var resultado = _validator.TestValidate(endereco);
-        resultado.ShouldNotHaveValidationErrorFor(x => x.Cep);
-    }
-
-    [Fact]
+ [Fact]
     public void Deve_Passar_Quando_Logradouro_Tem_Numeros(){
         var endereco = new Endereco("12345678", "Porto Alegre", "Centro", "Rua das Flores, 123, Apto 5", "Ap 101");
         var resultado = _validator.TestValidate(endereco);

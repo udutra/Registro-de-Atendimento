@@ -31,11 +31,11 @@ public class AtualizarPacienteDtoValidatorTests{
     [InlineData("")]
     [InlineData(null)]
     [InlineData("   ")]
-    public void Deve_Falhar_Quando_Nome_E_Vazio(string nome){
+    public void Deve_Passar_Quando_Nome_E_Vazio(string nome){
         var dto = CriarDtoValido();
         dto.Nome = nome;
         var resultado = _validator.TestValidate(dto);
-        resultado.ShouldHaveValidationErrorFor(x => x.Nome);
+        resultado.ShouldNotHaveValidationErrorFor(x => x.Nome);
     }
 
     [Fact]
@@ -102,44 +102,44 @@ public class AtualizarPacienteDtoValidatorTests{
     [InlineData("")]
     [InlineData(null)]
     [InlineData("   ")]
-    public void Deve_Falhar_Quando_CEP_E_Vazio(string cep){
+    public void Deve_Passar_Quando_CEP_E_Vazio(string cep){
         var dto = CriarDtoValido();
         dto.Cep = cep;
         var resultado = _validator.TestValidate(dto);
-        resultado.ShouldHaveValidationErrorFor(x => x.Cep);
+        resultado.ShouldNotHaveValidationErrorFor(x => x.Cep);
     }
 
     [Theory]
     [InlineData("")]
     [InlineData(null)]
     [InlineData("   ")]
-    public void Deve_Falhar_Quando_Cidade_E_Vazia(string cidade){
+    public void Deve_Passar_Quando_Cidade_E_Vazia(string cidade){
         var dto = CriarDtoValido();
         dto.Cidade = cidade;
         var resultado = _validator.TestValidate(dto);
-        resultado.ShouldHaveValidationErrorFor(x => x.Cidade);
+        resultado.ShouldNotHaveValidationErrorFor(x => x.Cidade);
     }
 
     [Theory]
     [InlineData("")]
     [InlineData(null)]
     [InlineData("   ")]
-    public void Deve_Falhar_Quando_Bairro_E_Vazio(string bairro){
+    public void Deve_Passar_Quando_Bairro_E_Vazio(string bairro){
         var dto = CriarDtoValido();
         dto.Bairro = bairro;
         var resultado = _validator.TestValidate(dto);
-        resultado.ShouldHaveValidationErrorFor(x => x.Bairro);
+        resultado.ShouldNotHaveValidationErrorFor(x => x.Bairro);
     }
 
     [Theory]
     [InlineData("")]
     [InlineData(null)]
     [InlineData("   ")]
-    public void Deve_Falhar_Quando_Logradouro_E_Vazio(string logradouro){
+    public void Deve_Passar_Quando_Logradouro_E_Vazio(string logradouro){
         var dto = CriarDtoValido();
         dto.Logradouro = logradouro;
         var resultado = _validator.TestValidate(dto);
-        resultado.ShouldHaveValidationErrorFor(x => x.Logradouro);
+        resultado.ShouldNotHaveValidationErrorFor(x => x.Logradouro);
     }
 
     [Theory]

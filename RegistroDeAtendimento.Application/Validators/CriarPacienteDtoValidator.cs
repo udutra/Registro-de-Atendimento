@@ -23,7 +23,9 @@ public class CriarPacienteDtoValidator : AbstractValidator<CriarPacienteDto>{
             .IsInEnum().WithMessage("Sexo inválido.");
 
         RuleFor(p => p.Cep)
-            .NotEmpty().WithMessage("O CEP é obrigatório.");
+            .NotEmpty().WithMessage("O CEP é obrigatório.")
+            .Length(8).WithMessage("O CEP deve conter 8 dígitos.")
+            .Matches(@"^\d{8}$").WithMessage("O CEP deve conter apenas números.");
 
         RuleFor(p => p.Cidade)
             .NotEmpty().WithMessage("A cidade é obrigatória.");

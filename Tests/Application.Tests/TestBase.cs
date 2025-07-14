@@ -34,9 +34,9 @@ public abstract class TestBase : IDisposable{
     }
 
     protected async Task<Atendimento> CriarAtendimentoAsync(Paciente paciente, string descricao = "Consulta de rotina"){
-        var atendimento = new Atendimento(paciente, DateTime.Now, descricao, StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.UtcNow, descricao, StatusEnum.Ativo);
 
-        Context.Antedimentos.Add(atendimento);
+        Context.Atendimentos.Add(atendimento);
         await Context.SaveChangesAsync();
 
         return atendimento;

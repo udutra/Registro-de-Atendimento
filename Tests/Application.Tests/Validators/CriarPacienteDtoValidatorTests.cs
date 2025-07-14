@@ -185,6 +185,14 @@ public class CriarPacienteDtoValidatorTests{
         var resultado = _validator.TestValidate(dto);
         resultado.ShouldNotHaveValidationErrorFor(x => x.Complemento);
     }
+    
+    [Fact]
+    public void Deve_Criar_Endereco_Com_CEP_Com_Tracos(){
+        var dto = CriarDtoValido();
+        dto.Cep = "12345-678";
+
+        dto.Cep.Should().Be("12345678"); // sem o traço
+    }
 
     [Fact]
     public void Deve_Passar_Quando_Complemento_E_Vazio(){

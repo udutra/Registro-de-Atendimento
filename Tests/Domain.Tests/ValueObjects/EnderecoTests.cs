@@ -48,13 +48,6 @@ public class EnderecoTests{
     }
 
     [Fact]
-    public void Deve_Criar_Endereco_Com_CEP_Com_Tracos(){
-        var endereco = new Endereco("12345-678", "Cidade", "Bairro", "Rua 1", "Ap 2");
-
-        endereco.Cep.Should().Be("12345-678");
-    }
-
-    [Fact]
     public void Deve_Criar_Endereco_Com_Logradouro_Com_Numeros(){
         var endereco = new Endereco("12345678", "Cidade", "Bairro", "Rua das Flores, 123", "Ap 2");
 

@@ -82,16 +82,15 @@ public class PacienteRepositoryTests : TestBase{
     [Fact]
     public async Task AtualizarAsync_Deve_Atualizar_Dados_Do_Paciente(){
         var paciente = await CriarPacienteAsync();
-        var novoEndereco = new Endereco("87654321", "São Paulo", "Vila Madalena", "Rua Augusta, 456", "Sala 2");
+        var novoEndereco = new Endereco("87654321", "São Paulo", "Vila Madalena", "Rua Augusta, 456", 
+            "Sala 2");
         paciente.AtualizarDados("João Atualizado", new DateOnly(1985, 5, 15), "98765432100", SexoEnum.Masculino,
-            novoEndereco, StatusEnum.Inativo);
-
+            novoEndereco);
         await _repository.AtualizarPacienteAsync(paciente);
         var pacienteAtualizado = await Context.Pacientes.FirstOrDefaultAsync(p => p.Id == paciente.Id);
         pacienteAtualizado.Should().NotBeNull();
         pacienteAtualizado!.Nome.Should().Be("João Atualizado");
         pacienteAtualizado.Cpf.Should().Be("98765432100");
-        pacienteAtualizado.Status.Should().Be(StatusEnum.Inativo);
         pacienteAtualizado.Endereco.Cidade.Should().Be("São Paulo");
     }
 

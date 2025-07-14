@@ -23,15 +23,13 @@ public class PacienteTests{
         var paciente = CriarPaciente();
         var novoEndereco = new Endereco("11111111", "Nova Cidade", "Novo Bairro", "Nova Rua", "Ap 2");
 
-        paciente.AtualizarDados("João", new DateOnly(1980, 1, 1), "98765432100", SexoEnum.Masculino, novoEndereco,
-            StatusEnum.Inativo);
-
+        paciente.AtualizarDados("João", new DateOnly(1980, 1, 1), "98765432100", SexoEnum.Masculino, novoEndereco);
+        
         paciente.Nome.Should().Be("João");
         paciente.DataNascimento.Should().Be(new DateOnly(1980, 1, 1));
         paciente.Cpf.Should().Be("98765432100");
         paciente.Sexo.Should().Be(SexoEnum.Masculino);
         paciente.Endereco.Should().Be(novoEndereco);
-        paciente.Status.Should().Be(StatusEnum.Inativo);
     }
 
     [Fact]
@@ -55,9 +53,7 @@ public class PacienteTests{
         var paciente = CriarPaciente();
         var endereco = paciente.Endereco;
 
-        paciente.AtualizarDados(paciente.Nome, paciente.DataNascimento, paciente.Cpf, paciente.Sexo, endereco,
-            paciente.Status);
-
+        paciente.AtualizarDados(paciente.Nome, paciente.DataNascimento, paciente.Cpf, paciente.Sexo, endereco);
         paciente.Nome.Should().Be("Guilherme");
     }
 

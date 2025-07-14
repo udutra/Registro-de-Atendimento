@@ -8,31 +8,44 @@ using RegistroDeAtendimento.Domain.Interfaces;
 using RegistroDeAtendimento.Infrastructure.Data;
 using RegistroDeAtendimento.Infrastructure.Repositories;
 
-var builder = WebApplication.CreateBuilder(args);
+public class Program{
+    public static void Main(string[] args){
 
-builder.Services.AddControllers().AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
+        var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        builder.Services.AddControllers().AddJsonOptions(options => {
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        });
 
-builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
-builder.Services.AddScoped<IAtendimentoRepository, AtendimentoRepository>();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IPacienteService, PacienteService>();
-builder.Services.AddScoped<IAtendimentoService, AtendimentoService>();
+        if (!builder.Environment.IsEnvironment("Testing"))
+        {
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        }
+        
 
-builder.Services.AddValidatorsFromAssemblyContaining<CriarPacienteDtoValidator>();
+        builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
+        builder.Services.AddScoped<IAtendimentoRepository, AtendimentoRepository>();
 
-var app = builder.Build();
+        builder.Services.AddScoped<IPacienteService, PacienteService>();
+        builder.Services.AddScoped<IAtendimentoService, AtendimentoService>();
 
-if (app.Environment.IsDevelopment()){
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        builder.Services.AddValidatorsFromAssemblyContaining<CriarPacienteDtoValidator>();
+
+        var app = builder.Build();
+
+        if (app.Environment.IsDevelopment()){
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseHttpsRedirection();
+        app.UseAuthorization();
+        app.MapControllers();
+        app.Run();
+    }
 }
-
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
-app.Run();

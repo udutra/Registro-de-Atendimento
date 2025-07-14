@@ -168,7 +168,6 @@ public class PacienteServiceIntegrationTests : TestBase{
         pacienteAtualizado.Should().NotBeNull();
         pacienteAtualizado!.Nome.Should().Be("João Atualizado");
         pacienteAtualizado.Cpf.Should().Be("98765432100");
-        pacienteAtualizado.Status.Should().Be(StatusEnum.Inativo);
         pacienteAtualizado.Endereco.Cidade.Should().Be("São Paulo");
     }
 

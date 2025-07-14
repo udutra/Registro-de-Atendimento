@@ -28,7 +28,7 @@ public class AtendimentoController(IAtendimentoService atendimentoService) : Con
 
         if (atendimento.Data == null)
             return atendimento.Code switch{
-                409 => Conflict(atendimento),
+                404 => NotFound(atendimento),
                 _ => BadRequest(atendimento)
             };
 
@@ -39,10 +39,9 @@ public class AtendimentoController(IAtendimentoService atendimentoService) : Con
     public async Task<IActionResult> Put(Guid id, [FromBody] AtualizarAtendimentoDto dto){
         var atendimento = await atendimentoService.AtualizarAtendimentoAsync(id, dto);
 
-        if (atendimento.Data == null)
+        if (!atendimento.IsSuccess)
             return atendimento.Code switch{
                 404 => NotFound(atendimento),
-                409 => Conflict(atendimento),
                 _ => BadRequest(atendimento)
             };
 
@@ -52,26 +51,23 @@ public class AtendimentoController(IAtendimentoService atendimentoService) : Con
     [HttpPatch("inativar/{id:guid}")]
     public async Task<IActionResult> Inativar(Guid id){
         var atendimento = await atendimentoService.InativarAtendimentoAsync(id);
+        
+        return atendimento.Code switch{
+            200 => Ok(atendimento.Message),
+            204 => NoContent(),
+            _ => BadRequest(atendimento)
+        };
 
-        if (atendimento.Data == null)
-            return atendimento.Code switch{
-                200 => Ok(atendimento.Message),
-                _ => BadRequest(atendimento)
-            };
-
-        return NoContent();
     }
 
     [HttpPatch("ativar/{id:guid}")]
     public async Task<IActionResult> Ativar(Guid id){
         var atendimento = await atendimentoService.AtivarAtendimentoAsync(id);
 
-        if (atendimento.Data == null)
-            return atendimento.Code switch{
-                200 => Ok(atendimento.Message),
-                _ => BadRequest(atendimento)
-            };
-
-        return NoContent();
+        return atendimento.Code switch{
+            200 => Ok(atendimento.Message),
+            204 => NoContent(),
+            _ => BadRequest(atendimento)
+        };
     }
 }

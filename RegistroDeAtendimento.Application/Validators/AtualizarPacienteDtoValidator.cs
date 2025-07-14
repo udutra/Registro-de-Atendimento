@@ -6,30 +6,43 @@ namespace RegistroDeAtendimento.Application.Validators;
 public class AtualizarPacienteDtoValidator : AbstractValidator<AtualizarPacienteDto>{
     public AtualizarPacienteDtoValidator(){
         RuleFor(p => p.Nome)
-            .NotEmpty().WithMessage("O nome é obrigatório.")
-            .MaximumLength(255);
+            .MaximumLength(255)
+            .When(p => p.Nome is not null)
+            .WithMessage("O nome não pode ultrapassar 255 caracteres.");
 
         RuleFor(p => p.DataNascimento)
-            .NotEmpty().WithMessage("A data de nascimento é obrigatória.")
             .LessThan(DateOnly.FromDateTime(DateTime.Today))
+            .When(p => p.DataNascimento is not null)
             .WithMessage("A data de nascimento deve ser anterior à data atual.");
 
         RuleFor(p => p.Sexo)
-            .IsInEnum().WithMessage("Sexo inválido.");
+            .IsInEnum()
+            .When(p => p.Sexo is not null)
+            .WithMessage("Sexo inválido.");
 
         RuleFor(p => p.Cep)
-            .NotEmpty().WithMessage("O CEP é obrigatório.");
+            .NotEmpty()
+            .WithMessage("O CEP é obrigatório.")
+            .When(p => !string.IsNullOrWhiteSpace(p.Cep));
 
         RuleFor(p => p.Cidade)
-            .NotEmpty().WithMessage("A cidade é obrigatória.");
+            .NotEmpty()
+            .WithMessage("A cidade é obrigatória.")
+            .When(p => !string.IsNullOrWhiteSpace(p.Cidade));
 
         RuleFor(p => p.Bairro)
-            .NotEmpty().WithMessage("O bairro é obrigatório.");
+            .NotEmpty()
+            .WithMessage("O bairro é obrigatório.")
+            .When(p => !string.IsNullOrWhiteSpace(p.Bairro));
 
         RuleFor(p => p.Logradouro)
-            .NotEmpty().WithMessage("O endereço é obrigatório.");
+            .NotEmpty()
+            .WithMessage("O endereço é obrigatório.")
+            .When(p => !string.IsNullOrWhiteSpace(p.Logradouro));
 
         RuleFor(p => p.Status)
-            .IsInEnum().WithMessage("Status inválido.");
+            .IsInEnum()
+            .When(p => p.Status is not null)
+            .WithMessage("Status inválido.");
     }
 }

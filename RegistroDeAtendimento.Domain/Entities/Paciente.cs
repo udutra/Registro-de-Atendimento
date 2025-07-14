@@ -24,13 +24,11 @@ public class Paciente : Entity{
         Atendimentos =[];
     }
 
-    public void AtualizarDados(string nome, DateOnly dataNascimento, string cpf, SexoEnum sexo, Endereco endereco,
-        StatusEnum status){
+    public void AtualizarDados(string nome, DateOnly dataNascimento, string cpf, SexoEnum sexo, Endereco endereco){
         Nome = nome;
         DataNascimento = dataNascimento;
         Cpf = cpf;
         Sexo = sexo;
         Endereco = endereco;
-        AlterarStatus(status);
     }
 }

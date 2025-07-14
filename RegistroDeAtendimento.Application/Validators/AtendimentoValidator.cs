@@ -12,7 +12,7 @@ public class AtendimentoValidator : AbstractValidator<Atendimento>{
         RuleFor(a => a.DataHora)
             .NotEmpty()
             .WithMessage("A data e hora são obrigatórias.")
-            .Must(data => data <= DateTime.Now)
+            .Must(data => data <= DateTime.UtcNow)
             .WithMessage("A data e hora não podem estar no futuro.");
 
         RuleFor(a => a.Descricao)

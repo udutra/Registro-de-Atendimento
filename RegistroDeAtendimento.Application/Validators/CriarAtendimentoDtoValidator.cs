@@ -10,7 +10,7 @@ public class CriarAtendimentoDtoValidator : AbstractValidator<CriarAtendimentoDt
 
         RuleFor(x => x.DataHora)
             .NotEmpty().WithMessage("A data e hora são obrigatórias.")
-            .Must(data => data <= DateTime.Now)
+            .Must(data => data <= DateTime.UtcNow)
             .WithMessage("A data e hora não podem estar no futuro.");
 
         RuleFor(x => x.Descricao)

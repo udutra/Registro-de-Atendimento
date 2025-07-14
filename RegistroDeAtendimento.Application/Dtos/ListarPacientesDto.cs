@@ -8,7 +8,7 @@ public class ListarPacientesDto{
     public string? Cpf { get; set; } = null;
     public int Page{ get; set; } = ConfigurationResponse.DefaultCurrentPage;
     public int PageSize{ get; set; } = ConfigurationResponse.DefaultPageSize;
-    public OrderByPacienteEnum? OrderBy { get; set; }  = null;
-    public SortDirectionEnum? Sort { get; set; } = null;
-    public StatusEnum? Status{ get; set; } = null;
+    public OrderByPacienteEnum? OrderBy { get; set; }
+    public SortDirectionEnum? Sort { get; set; } 
+    public StatusEnum? Status{ get; set; }
 }
