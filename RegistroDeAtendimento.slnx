@@ -1,17 +1,18 @@
 ﻿<Solution>
-    <Folder Name="/git/">
-        <File Path=".gitignore"/>
-        <File Path="README.md"/>
-    </Folder>
-    <Folder Name="/Tests/">
-        <Project Path="Tests\Api.Tests\Api.Tests.csproj" Type="Classic C#"/>
-        <Project Path="Tests\Application.Tests\Application.Tests.csproj" Type="Classic C#"/>
-        <Project Path="Tests\Domain.Tests\Domain.Tests.csproj" Type="Classic C#"/>
-        <Project Path="Tests\Infrastructure.Tests\Infrastructure.Tests.csproj" Type="Classic C#"/>
-    </Folder>
-    <Project Path="RegistroDeAtendimento.Api\RegistroDeAtendimento.Api.csproj" Type="Classic C#"/>
-    <Project Path="RegistroDeAtendimento.Application\RegistroDeAtendimento.Application.csproj" Type="Classic C#"/>
-    <Project Path="RegistroDeAtendimento.Domain\RegistroDeAtendimento.Domain.csproj" Type="Classic C#"/>
-    <Project Path="RegistroDeAtendimento.Infrastructure\RegistroDeAtendimento.Infrastructure.csproj" Type="Classic C#"/>
-    <Project Path="RegistroDeAtendimento.Shared\RegistroDeAtendimento.Shared.csproj" Type="Classic C#"/>
+  <Folder Name="/git/">
+    <File Path=".gitignore" />
+    <File Path="README.md" />
+    <File Path=".github\workflows\ci.yml" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests\Api.Tests\Api.Tests.csproj" Type="Classic C#" />
+    <Project Path="Tests\Application.Tests\Application.Tests.csproj" Type="Classic C#" />
+    <Project Path="Tests\Domain.Tests\Domain.Tests.csproj" Type="Classic C#" />
+    <Project Path="Tests\Infrastructure.Tests\Infrastructure.Tests.csproj" Type="Classic C#" />
+  </Folder>
+  <Project Path="RegistroDeAtendimento.Api\RegistroDeAtendimento.Api.csproj" Type="Classic C#" />
+  <Project Path="RegistroDeAtendimento.Application\RegistroDeAtendimento.Application.csproj" Type="Classic C#" />
+  <Project Path="RegistroDeAtendimento.Domain\RegistroDeAtendimento.Domain.csproj" Type="Classic C#" />
+  <Project Path="RegistroDeAtendimento.Infrastructure\RegistroDeAtendimento.Infrastructure.csproj" Type="Classic C#" />
+  <Project Path="RegistroDeAtendimento.Shared\RegistroDeAtendimento.Shared.csproj" Type="Classic C#" />
 </Solution>
