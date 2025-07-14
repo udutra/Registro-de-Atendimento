@@ -18,7 +18,7 @@ public class AtendimentoRepositoryTests : TestBase
     public async Task AdicionarAsync_Deve_Salvar_Atendimento_No_Banco()
     {
         var paciente = await CriarPacienteAsync();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow.AddMinutes(-10), "Consulta inicial", StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.Now.AddMinutes(-10), "Consulta inicial", StatusEnum.Ativo);
 
         await _repository.AdicionarAtendimentoAsync(atendimento);
 
@@ -33,7 +33,7 @@ public class AtendimentoRepositoryTests : TestBase
     public async Task ObterPorIdAsync_Deve_Retornar_Atendimento_Quando_Existe()
     {
         var paciente = await CriarPacienteAsync();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow.AddMinutes(-20), "Retorno", StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.Now.AddMinutes(-20), "Retorno", StatusEnum.Ativo);
         Context.Atendimentos.Add(atendimento);
         await Context.SaveChangesAsync();
 
@@ -55,8 +55,8 @@ public class AtendimentoRepositoryTests : TestBase
     public async Task ObterTodos_Deve_Retornar_Todos_Os_Atendimentos()
     {
         var paciente = await CriarPacienteAsync();
-        var atendimento1 = new Atendimento(paciente, DateTime.UtcNow.AddMinutes(-30), "Primeira consulta", StatusEnum.Ativo);
-        var atendimento2 = new Atendimento(paciente, DateTime.UtcNow.AddMinutes(-20), "Segunda consulta", StatusEnum.Ativo);
+        var atendimento1 = new Atendimento(paciente, DateTime.Now.AddMinutes(-30), "Primeira consulta", StatusEnum.Ativo);
+        var atendimento2 = new Atendimento(paciente, DateTime.Now.AddMinutes(-20), "Segunda consulta", StatusEnum.Ativo);
         Context.Atendimentos.AddRange(atendimento1, atendimento2);
         await Context.SaveChangesAsync();
 
@@ -70,17 +70,17 @@ public class AtendimentoRepositoryTests : TestBase
     public async Task AtualizarAsync_Deve_Atualizar_Dados_Do_Atendimento()
     {
         var paciente = await CriarPacienteAsync();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow.AddMinutes(-40), "Consulta antiga", StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.Now.AddMinutes(-40), "Consulta antiga", StatusEnum.Ativo);
         Context.Atendimentos.Add(atendimento);
         await Context.SaveChangesAsync();
 
-        atendimento.AtualizarDados(paciente, DateTime.UtcNow.AddMinutes(-10), "Consulta atualizada");
+        atendimento.AtualizarDados(paciente, DateTime.Now.AddMinutes(-10), "Consulta atualizada");
         await _repository.AtualizarAtendimentoAsync(atendimento);
 
         var atendimentoAtualizado = await Context.Atendimentos.FirstOrDefaultAsync(a => a.Id == atendimento.Id);
         atendimentoAtualizado.Should().NotBeNull();
         atendimentoAtualizado!.Descricao.Should().Be("Consulta atualizada");
-        atendimentoAtualizado.DataHora.Should().BeCloseTo(DateTime.UtcNow.AddMinutes(-10), TimeSpan.FromSeconds(5));
+        atendimentoAtualizado.DataHora.Should().BeCloseTo(DateTime.Now.AddMinutes(-10), TimeSpan.FromSeconds(5));
     }
     
     [Fact]

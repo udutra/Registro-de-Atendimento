@@ -13,7 +13,7 @@ public class AtendimentoValidatorTests{
     [Fact]
     public void Deve_Passar_Quando_Atendimento_E_Valido(){
         var paciente = CriarPaciente();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow.AddHours(-1), "Consulta de rotina", StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.Now.AddHours(-1), "Consulta de rotina", StatusEnum.Ativo);
         var property = typeof(Atendimento).GetProperty("PacienteId");
         property?.SetValue(atendimento, paciente.Id);
 
@@ -25,7 +25,7 @@ public class AtendimentoValidatorTests{
     [Fact]
     public void Deve_Falhar_Quando_PacienteId_E_Vazio(){
         var paciente = CriarPaciente();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow.AddHours(-1), "Consulta de rotina", StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.Now.AddHours(-1), "Consulta de rotina", StatusEnum.Ativo);
         var property = typeof(Atendimento).GetProperty("PacienteId");
         property?.SetValue(atendimento, Guid.Empty);
 
@@ -37,7 +37,7 @@ public class AtendimentoValidatorTests{
     [Fact]
     public void Deve_Passar_Quando_PacienteId_E_Valido(){
         var paciente = CriarPaciente();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow.AddHours(-1), "Consulta de rotina", StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.Now.AddHours(-1), "Consulta de rotina", StatusEnum.Ativo);
         var property = typeof(Atendimento).GetProperty("PacienteId");
         property?.SetValue(atendimento, paciente.Id);
 
@@ -50,7 +50,7 @@ public class AtendimentoValidatorTests{
     public void Nao_Deve_Criar_Atendimento_Com_Data_Futura()
     {
         var paciente = CriarPaciente();
-        var dataHoraFutura = DateTime.UtcNow.AddHours(1);
+        var dataHoraFutura = DateTime.Now.AddHours(1);
 
         Action act = () => new Atendimento(paciente, dataHoraFutura, "Consulta", StatusEnum.Ativo);
 
@@ -61,7 +61,7 @@ public class AtendimentoValidatorTests{
     [Fact]
     public void Deve_Passar_Quando_DataHora_E_Passada(){
         var paciente = CriarPaciente();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow.AddHours(-1), "Consulta de rotina", StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.Now.AddHours(-1), "Consulta de rotina", StatusEnum.Ativo);
         var resultado = _validator.TestValidate(atendimento);
         resultado.ShouldNotHaveValidationErrorFor(x => x.DataHora);
     }
@@ -69,7 +69,7 @@ public class AtendimentoValidatorTests{
     [Fact]
     public void Deve_Passar_Quando_DataHora_E_Agora(){
         var paciente = CriarPaciente();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow, "Consulta de rotina", StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.Now, "Consulta de rotina", StatusEnum.Ativo);
         var resultado = _validator.TestValidate(atendimento);
         resultado.ShouldNotHaveValidationErrorFor(x => x.DataHora);
     }
@@ -80,7 +80,7 @@ public class AtendimentoValidatorTests{
     [InlineData(null)]
     public void Deve_Falhar_Quando_Descricao_E_Vazia(string descricao){
         var paciente = CriarPaciente();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow.AddHours(-1), descricao, StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.Now.AddHours(-1), descricao, StatusEnum.Ativo);
         var resultado = _validator.TestValidate(atendimento);
         resultado.ShouldHaveValidationErrorFor(x => x.Descricao);
     }
@@ -88,7 +88,7 @@ public class AtendimentoValidatorTests{
     [Fact]
     public void Deve_Passar_Quando_Descricao_E_Valida(){
         var paciente = CriarPaciente();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow.AddHours(-1),
+        var atendimento = new Atendimento(paciente, DateTime.Now.AddHours(-1),
             "Consulta de rotina com descrição detalhada",
             StatusEnum.Ativo);
         var resultado = _validator.TestValidate(atendimento);
@@ -98,7 +98,7 @@ public class AtendimentoValidatorTests{
     [Fact]
     public void Deve_Passar_Quando_Descricao_Tem_Caracteres_Especiais(){
         var paciente = CriarPaciente();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow.AddHours(-1),
+        var atendimento = new Atendimento(paciente, DateTime.Now.AddHours(-1),
             "Consulta com caracteres especiais: áéíóú çãõ ñ",
             StatusEnum.Ativo);
 
@@ -110,7 +110,7 @@ public class AtendimentoValidatorTests{
     [InlineData((StatusEnum)999)]
     public void Deve_Falhar_Quando_Status_E_Invalido(StatusEnum status){
         var paciente = CriarPaciente();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow.AddHours(-1), "Consulta de rotina", status);
+        var atendimento = new Atendimento(paciente, DateTime.Now.AddHours(-1), "Consulta de rotina", status);
         var resultado = _validator.TestValidate(atendimento);
         resultado.ShouldHaveValidationErrorFor(x => x.Status);
     }
@@ -120,7 +120,7 @@ public class AtendimentoValidatorTests{
     [InlineData(StatusEnum.Inativo)]
     public void Deve_Passar_Quando_Status_E_Valido(StatusEnum status){
         var paciente = CriarPaciente();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow.AddHours(-1), "Consulta de rotina", status);
+        var atendimento = new Atendimento(paciente, DateTime.Now.AddHours(-1), "Consulta de rotina", status);
         var resultado = _validator.TestValidate(atendimento);
         resultado.ShouldNotHaveValidationErrorFor(x => x.Status);
     }
@@ -129,7 +129,7 @@ public class AtendimentoValidatorTests{
     public void Deve_Passar_Quando_Descricao_E_Longa(){
         var paciente = CriarPaciente();
         var descricaoLonga = new string('A', 1000);
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow.AddHours(-1), descricaoLonga, StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.Now.AddHours(-1), descricaoLonga, StatusEnum.Ativo);
         var resultado = _validator.TestValidate(atendimento);
         resultado.ShouldNotHaveValidationErrorFor(x => x.Descricao);
     }
@@ -137,7 +137,7 @@ public class AtendimentoValidatorTests{
     [Fact]
     public void Deve_Passar_Quando_DataHora_E_Muito_Antiga(){
         var paciente = CriarPaciente();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow.AddYears(-10), "Consulta antiga", StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.Now.AddYears(-10), "Consulta antiga", StatusEnum.Ativo);
         var resultado = _validator.TestValidate(atendimento);
         resultado.ShouldNotHaveValidationErrorFor(x => x.DataHora);
     }

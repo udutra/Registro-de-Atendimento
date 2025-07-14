@@ -1,0 +1,93 @@
+@page "/listar-pacientes"
+@using RegistroDeAtendimento.Core.Domain.Enums
+
+@if (IsBusy){
+    <h3>Carregando valores...</h3>
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+}
+else{
+    <MudPaper Class="pa-4">
+    <MudText Typo="Typo.h5">Listar Pacientes</MudText>
+    
+    <MudForm Model="@ListarPacientesDto" @ref="_form">
+        <MudTextField @bind-Value="ListarPacientesDto.Nome" Label="Nome" />
+        <MudTextField @bind-Value="ListarPacientesDto.Cpf" Label="Cpf" />
+        
+        <MudRadioGroup T="StatusEnum?" @bind-Value="ListarPacientesDto.Status">
+            <MudRadio T="StatusEnum?" Value="null">Todos</MudRadio>
+            @foreach (StatusEnum item in Enum.GetValues(typeof(StatusEnum))){
+                <MudRadio T="StatusEnum?" Value="@item">@item.ToString()</MudRadio>
+            }
+        </MudRadioGroup>
+        
+        <MudRadioGroup T="OrderByPacienteEnum?" @bind-Value="ListarPacientesDto.OrderBy">
+            @foreach (OrderByPacienteEnum item in Enum.GetValues(typeof(OrderByPacienteEnum))){
+                <MudRadio T="OrderByPacienteEnum?" Value="@item">@item.ToString()</MudRadio>
+            }
+        </MudRadioGroup>
+        
+        <MudRadioGroup T="SortDirectionEnum?" @bind-Value="ListarPacientesDto.Sort">
+            @foreach (SortDirectionEnum item in Enum.GetValues(typeof(SortDirectionEnum))){
+                <MudRadio T="SortDirectionEnum?" Value="@item">@item.ToString()</MudRadio>
+            }
+        </MudRadioGroup>
+        
+        <MudButton OnClick="@BuscarPacientes" Color="Color.Primary">Buscar Pacientes</MudButton>
+    </MudForm>
+</MudPaper>
+
+<MudSpacer></MudSpacer>
+    
+<MudPaper Class="pa-4">
+    <MudTable Items="@ListPacientes" Dense="true" Hover="true" Bordered="true" Striped="true" @bind-SelectedItem="Paciente">
+        <HeaderContent>
+            <MudTh>Id</MudTh>
+            <MudTh>Nome</MudTh>
+            <MudTh>Data de Nascimento</MudTh>
+            <MudTh>Cpf</MudTh>
+            <MudTh>Sexo</MudTh>
+            <MudTh>Cep</MudTh>
+            <MudTh>Cidade</MudTh>
+            <MudTh>Bairro</MudTh>
+            <MudTh>Logradouro</MudTh>
+            <MudTh>Complemento</MudTh>
+            <MudTh>Status</MudTh>
+            <MudTh>Ação</MudTh>
+            
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Id">@context.Id</MudTd>
+            <MudTd DataLabel="Nome">@context.Nome</MudTd>
+            <MudTd DataLabel="Data de Nascimento">@context.DataNascimento</MudTd>
+            <MudTd DataLabel="Cpf">@context.Cpf</MudTd>
+            <MudTd DataLabel="Sexo">@context.Sexo.ToString()</MudTd>
+            <MudTd DataLabel="Cep">@context.Cep</MudTd>
+            <MudTd DataLabel="Cidade">@context.Cidade</MudTd>
+            <MudTd DataLabel="Bairro">@context.Bairro</MudTd>
+            <MudTd DataLabel="Logradouro">@context.Logradouro</MudTd>
+            <MudTd DataLabel="Complemento">@context.Complemento</MudTd>
+            <MudTd DataLabel="Status">@context.Status.ToString()</MudTd>
+            <MudTd DataLabel="Ação">
+                @if (context.Status == StatusEnum.Ativo)
+                {
+                    <MudButton OnClick="@(() => Inativar(context.Id))" Color="Color.Warning">
+                        Inativar Paciente
+                    </MudButton>
+                }
+                else
+                {
+                    <MudButton OnClick="@(() => Ativar(context.Id))" Color="Color.Success">
+                        Ativar Paciente
+                    </MudButton>
+                }
+                <MudButton OnClick="@(() => Editar(context))" Color="Color.Info">
+                    Editar Paciente
+                </MudButton>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+</MudPaper>
+}

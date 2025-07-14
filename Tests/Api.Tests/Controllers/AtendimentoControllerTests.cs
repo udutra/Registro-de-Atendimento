@@ -46,7 +46,7 @@ public class AtendimentoControllerTests(CustomWebApplicationFactory<Program> fac
 
         var atendimentoDto = new CriarAtendimentoDto(){
             PacienteId = pacienteId,
-            DataHora = DateTime.UtcNow.AddDays(-1),
+            DataHora = DateTime.Now.AddDays(-1),
             Descricao = "Teste de atendimento",
             Status = 0
         };
@@ -104,7 +104,7 @@ public class AtendimentoControllerTests(CustomWebApplicationFactory<Program> fac
         
         var atendimentoDto = new CriarAtendimentoDto(){
             PacienteId = pacienteId,
-            DataHora = DateTime.UtcNow.AddDays(-1),
+            DataHora = DateTime.Now.AddDays(-1),
             Descricao = "Consulta de rotina",
             Status = 0
         };
@@ -143,7 +143,7 @@ public class AtendimentoControllerTests(CustomWebApplicationFactory<Program> fac
         
         var atendimentoDto = new CriarAtendimentoDto(){
             PacienteId = pacienteId,
-            DataHora = DateTime.UtcNow.AddDays(1),
+            DataHora = DateTime.Now.AddDays(1),
             Descricao = "Consulta de rotina",
             Status = 0
         };
@@ -157,7 +157,7 @@ public class AtendimentoControllerTests(CustomWebApplicationFactory<Program> fac
     public async Task Post_Deve_Retornar_Status_404_Quando_Id_Usuario_Nao_Existe(){
         var atendimentoDto = new CriarAtendimentoDto(){
             PacienteId = Guid.NewGuid(),
-            DataHora = DateTime.UtcNow,
+            DataHora = DateTime.Now,
             Descricao = "Teste com dados inválidos",
             Status = 0
         };
@@ -194,7 +194,7 @@ public class AtendimentoControllerTests(CustomWebApplicationFactory<Program> fac
         
         var atendimentoDto = new CriarAtendimentoDto(){
             PacienteId = pacienteId,
-            DataHora = DateTime.UtcNow.AddDays(-2),
+            DataHora = DateTime.Now.AddDays(-2),
             Descricao = "Atendimento para atualização",
             Status = StatusEnum.Ativo
         };
@@ -212,7 +212,7 @@ public class AtendimentoControllerTests(CustomWebApplicationFactory<Program> fac
 
         var atualizarDto = new AtualizarAtendimentoDto(){
             PacienteId = pacienteId,
-            DataHora = DateTime.UtcNow.AddDays(-3),
+            DataHora = DateTime.Now.AddDays(-3),
             Descricao = "Descrição atualizada"
         };
         
@@ -233,7 +233,7 @@ public class AtendimentoControllerTests(CustomWebApplicationFactory<Program> fac
         
         var atualizarDto = new AtualizarAtendimentoDto(){
             PacienteId = Guid.NewGuid(),
-            DataHora = DateTime.UtcNow,
+            DataHora = DateTime.Now,
             Descricao = "Tentativa de atualização"
         };
         
@@ -264,7 +264,7 @@ public class AtendimentoControllerTests(CustomWebApplicationFactory<Program> fac
 
         var atendimentoDto = new CriarAtendimentoDto(){
             PacienteId = pacienteId,
-            DataHora = DateTime.UtcNow.AddDays(-2),
+            DataHora = DateTime.Now.AddDays(-2),
             Descricao = "Atendimento para atualização",
             Status = StatusEnum.Ativo
         };
@@ -276,7 +276,7 @@ public class AtendimentoControllerTests(CustomWebApplicationFactory<Program> fac
 
         var atualizarDto = new AtualizarAtendimentoDto(){
             PacienteId = pacienteId,
-            DataHora = DateTime.UtcNow.AddDays(3),
+            DataHora = DateTime.Now.AddDays(3),
             Descricao = ""
         };
 
@@ -310,7 +310,7 @@ public class AtendimentoControllerTests(CustomWebApplicationFactory<Program> fac
 
         var atendimentoDto = new CriarAtendimentoDto{
             PacienteId = pacienteId,
-            DataHora = DateTime.UtcNow.AddDays(-2),
+            DataHora = DateTime.Now.AddDays(-2),
             Descricao = "Consulta já inativa",
             Status = StatusEnum.Inativo
         };
@@ -349,7 +349,7 @@ public class AtendimentoControllerTests(CustomWebApplicationFactory<Program> fac
 
         var atendimentoDto = new CriarAtendimentoDto{
             PacienteId = pacienteId,
-            DataHora = DateTime.UtcNow.AddDays(-1),
+            DataHora = DateTime.Now.AddDays(-1),
             Descricao = "Consulta 1",
             Status = StatusEnum.Ativo
         };
@@ -407,7 +407,7 @@ public class AtendimentoControllerTests(CustomWebApplicationFactory<Program> fac
         var atendimentoDto = new CriarAtendimentoDto
         {
             PacienteId = pacienteId,
-            DataHora = DateTime.UtcNow.AddDays(-3),
+            DataHora = DateTime.Now.AddDays(-3),
             Descricao = "Consulta já ativa",
             Status = StatusEnum.Ativo
         };
@@ -451,7 +451,7 @@ public class AtendimentoControllerTests(CustomWebApplicationFactory<Program> fac
 
         var atendimentoDto = new CriarAtendimentoDto{
             PacienteId = pacienteId,
-            DataHora = DateTime.UtcNow.AddDays(-2),
+            DataHora = DateTime.Now.AddDays(-2),
             Descricao = "Consulta para ativar",
             Status = StatusEnum.Inativo
         };

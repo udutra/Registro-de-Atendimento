@@ -1,3 +1,4 @@
+using FluentValidation;
 using RegistroDeAtendimento.Core.Domain.Enums;
 
 namespace RegistroDeAtendimento.Shared.Application.Dtos;

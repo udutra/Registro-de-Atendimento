@@ -45,4 +45,10 @@ public class AtualizarPacienteDtoValidator : AbstractValidator<AtualizarPaciente
             .When(p => p.Status is not null)
             .WithMessage("Status inválido.");
     }
+    
+    public Func<AtualizarPacienteDto, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) => {
+        var result = await ValidateAsync(ValidationContext<AtualizarPacienteDto>.CreateWithOptions(model, 
+            x => x.IncludeProperties(propertyName)));
+        return result.IsValid ? [] : result.Errors.Select(e => e.ErrorMessage);
+    };
 }

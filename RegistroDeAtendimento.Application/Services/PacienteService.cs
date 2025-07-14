@@ -13,7 +13,7 @@ namespace RegistroDeAtendimento.Application.Services;
 public class PacienteService(IPacienteRepository repository, IValidator<CriarPacienteDto> criarValidator,
     IValidator<AtualizarPacienteDto> atualizarValidator) : IPacienteService{
     
-    public async Task<PagedResponse<List<Paciente>>> ListarPacientesAsync(ListarPacientesDto dto){
+    public async Task<PagedResponse<List<PacienteResponseDto>>> ListarPacientesAsync(ListarPacientesDto dto){
         var query = repository.ObterTodosPacientes();
 
         if (!string.IsNullOrWhiteSpace(dto.Nome))
@@ -25,16 +25,20 @@ public class PacienteService(IPacienteRepository repository, IValidator<CriarPac
         if (dto.Status.HasValue)
             query = query.Where(p => p.Status == dto.Status.Value);
         
-        query = dto.OrderBy switch{
+        query = dto.OrderBy switch
+        {
             OrderByPacienteEnum.Nome => dto.Sort == SortDirectionEnum.Asc
-                ? query.OrderBy(p => p.Nome)
-                : query.OrderByDescending(p => p.Nome),
+                ? query.OrderBy(p => p.Nome).ThenBy(p => p.Id)
+                : query.OrderByDescending(p => p.Nome).ThenBy(p => p.Id),
+
             OrderByPacienteEnum.DataNascimento => dto.Sort == SortDirectionEnum.Asc
-                ? query.OrderBy(p => p.DataNascimento)
-                : query.OrderByDescending(p => p.DataNascimento),
+                ? query.OrderBy(p => p.DataNascimento).ThenBy(p => p.Id)
+                : query.OrderByDescending(p => p.DataNascimento).ThenBy(p => p.Id),
+        
             OrderByPacienteEnum.Cpf => dto.Sort == SortDirectionEnum.Asc
-                ? query.OrderBy(p => p.Cpf)
-                : query.OrderByDescending(p => p.Cpf),
+                ? query.OrderBy(p => p.Cpf).ThenBy(p => p.Id)
+                : query.OrderByDescending(p => p.Cpf).ThenBy(p => p.Id),
+
             _ => dto.Sort == SortDirectionEnum.Asc
                 ? query.OrderBy(p => p.Id)
                 : query.OrderByDescending(p => p.Id)
@@ -42,51 +46,94 @@ public class PacienteService(IPacienteRepository repository, IValidator<CriarPac
 
         var totalItems = await query.CountAsync();
 
-        var list = await query
+        var list = await query.AsNoTracking()
             .Skip((dto.Page - 1) * dto.PageSize)
             .Take(dto.PageSize)
+            .Select(p => new PacienteResponseDto(){
+                Id = p.Id,
+                Nome = p.Nome,
+                DataNascimento = p.DataNascimento,
+                Cpf = p.Cpf,
+                Sexo = p.Sexo, 
+                Cep = p.Endereco.Cep,
+                Cidade = p.Endereco.Cidade,
+                Bairro = p.Endereco.Bairro,
+                Logradouro = p.Endereco.Logradouro,
+                Complemento = p.Endereco.Complemento,
+                Status = p.Status
+                
+            })
             .ToListAsync();
 
-        return new PagedResponse<List<Paciente>>(list, totalItems, dto.Page, dto.PageSize);
+        return new PagedResponse<List<PacienteResponseDto>>(list, totalItems, dto.Page, dto.PageSize);
     }
 
-    public async Task<Response<Paciente?>> ObterPacientePorIdAsync(Guid id){
+    public async Task<Response<PacienteResponseDto?>> ObterPacientePorIdAsync(Guid id){
         var paciente = await repository.ObterPacientePorIdAsync(id);
 
-        return paciente == null
-            ? new Response<Paciente?>(null, 404, "Paciente não encontrado.")
-            : new Response<Paciente?>(paciente, 200, "Paciente localizado com sucesso.");
+        if (paciente == null){
+            return new Response<PacienteResponseDto?>(null, 404, "Paciente não encontrado.");
+        }
+
+        var pacienteDto = new PacienteResponseDto(){
+            Id = paciente.Id,
+            Nome = paciente.Nome,
+            DataNascimento = paciente.DataNascimento,
+            Cpf = paciente.Cpf,
+            Sexo = paciente.Sexo,
+            Cep = paciente.Endereco.Cep,
+            Cidade = paciente.Endereco.Cidade,
+            Bairro = paciente.Endereco.Bairro,
+            Logradouro = paciente.Endereco.Logradouro,
+            Complemento = paciente.Endereco.Complemento,
+            Status = paciente.Status
+        };
+        return new Response<PacienteResponseDto?>(pacienteDto, 200, "Paciente localizado com sucesso.");
     }
 
-    public async Task<Response<Paciente?>> CriarPacienteAsync(CriarPacienteDto dto){
+    public async Task<Response<PacienteResponseDto?>> CriarPacienteAsync(CriarPacienteDto dto){
         var validation = await criarValidator.ValidateAsync(dto);
         if (!validation.IsValid)
-            return new Response<Paciente?>(null, 400, string.Join("; ", validation.Errors.Select(e => e.ErrorMessage)));
+            return new Response<PacienteResponseDto?>(null, 400, string.Join("; ", validation.Errors.Select(e => e.ErrorMessage)));
 
         if (await repository.ExisteCpfAsync(dto.Cpf))
-            return new Response<Paciente?>(null, 409, "Já existe um paciente com esse CPF.");
+            return new Response<PacienteResponseDto?>(null, 409, "Já existe um paciente com esse CPF.");
 
         var paciente = new Paciente(dto.Nome, dto.DataNascimento, dto.Cpf, dto.Sexo, new Endereco(dto.Cep, dto.Cidade,
             dto.Bairro, dto.Logradouro,
             dto.Complemento), dto.Status);
 
         await repository.AdicionarPacienteAsync(paciente);
+        
+        var pacienteDto = new PacienteResponseDto(){
+            Id = paciente.Id,
+            Nome = paciente.Nome,
+            DataNascimento = paciente.DataNascimento,
+            Cpf = paciente.Cpf,
+            Sexo = paciente.Sexo,
+            Cep = paciente.Endereco.Cep,
+            Cidade = paciente.Endereco.Cidade,
+            Bairro = paciente.Endereco.Bairro,
+            Logradouro = paciente.Endereco.Logradouro,
+            Complemento = paciente.Endereco.Complemento,
+            Status = paciente.Status
+        };
 
-        return new Response<Paciente?>(paciente, 201, "Paciente criado com sucesso.");
+        return new Response<PacienteResponseDto?>(pacienteDto, 201, "Paciente criado com sucesso.");
     }
 
-    public async Task<Response<Paciente?>> AtualizarPacienteAsync(Guid id, AtualizarPacienteDto dto){
+    public async Task<Response<PacienteResponseDto?>> AtualizarPacienteAsync(Guid id, AtualizarPacienteDto dto){
         var paciente = await repository.ObterPacientePorIdAsync(id);
         if (paciente is null)
-            return new Response<Paciente?>(null, 404, "Paciente não encontrado.");
+            return new Response<PacienteResponseDto?>(null, 404, "Paciente não encontrado.");
 
         if (dto.Cpf != null && await repository.ExisteCpfAsync(dto.Cpf, id))
-            return new Response<Paciente?>(null, 409, "Já existe um paciente com esse CPF.");
+            return new Response<PacienteResponseDto?>(null, 409, "Já existe um paciente com esse CPF.");
 
         var validation = await atualizarValidator.ValidateAsync(dto);
 
         if (!validation.IsValid)
-            return new Response<Paciente?>(null, 400, string.Join("; ", validation.Errors.Select(e => e.ErrorMessage)));
+            return new Response<PacienteResponseDto?>(null, 400, string.Join("; ", validation.Errors.Select(e => e.ErrorMessage)));
 
         paciente.AtualizarDados(
             !string.IsNullOrWhiteSpace(dto.Nome) ? dto.Nome : paciente.Nome,
@@ -104,32 +151,32 @@ public class PacienteService(IPacienteRepository repository, IValidator<CriarPac
         
         await repository.AtualizarPacienteAsync(paciente);
 
-        return new Response<Paciente?>(null, 204, "Paciente atualizado com sucesso.");
+        return new Response<PacienteResponseDto?>(null, 204, "Paciente atualizado com sucesso.");
     }
 
-    public async Task<Response<Paciente?>> InativarPacienteAsync(Guid id){
+    public async Task<Response<PacienteResponseDto?>> InativarPacienteAsync(Guid id){
         var paciente = await repository.ObterPacientePorIdAsync(id);
         if (paciente is null)
-            return new Response<Paciente?>(null, 404, "Paciente não encontrado.");
+            return new Response<PacienteResponseDto?>(null, 404, "Paciente não encontrado.");
 
         if (paciente.Status != StatusEnum.Ativo)
-            return new Response<Paciente?>(null, 200, "Paciente já está Inativo.");
+            return new Response<PacienteResponseDto?>(null, 200, "Paciente já está Inativo.");
         
         paciente.AlterarStatus(StatusEnum.Inativo);
         await repository.AtualizarPacienteAsync(paciente);
-        return new Response<Paciente?>(null, 204, "Paciente inativado com sucesso.");
+        return new Response<PacienteResponseDto?>(null, 204, "Paciente inativado com sucesso.");
     }
 
-    public async Task<Response<Paciente?>> AtivarPacienteAsync(Guid id){
+    public async Task<Response<PacienteResponseDto?>> AtivarPacienteAsync(Guid id){
         var paciente = await repository.ObterPacientePorIdAsync(id);
         if (paciente is null)
-            return new Response<Paciente?>(null, 404, "Paciente não encontrado.");
+            return new Response<PacienteResponseDto?>(null, 404, "Paciente não encontrado.");
 
         if (paciente.Status != StatusEnum.Inativo)
-            return new Response<Paciente?>(null, 200, "Paciente já está Ativo.");
+            return new Response<PacienteResponseDto?>(null, 200, "Paciente já está Ativo.");
 
         paciente.AlterarStatus(StatusEnum.Ativo);
         await repository.AtualizarPacienteAsync(paciente);
-        return new Response<Paciente?>(null, 204, "Paciente ativado com sucesso.");
+        return new Response<PacienteResponseDto?>(null, 204, "Paciente ativado com sucesso.");
     }
 }

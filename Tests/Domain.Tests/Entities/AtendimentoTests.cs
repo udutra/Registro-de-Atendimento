@@ -10,7 +10,7 @@ public class AtendimentoTests{
     [Fact]
     public void Criar_Atendimento_Valido_Deve_Preencher_Campos_Corretamente(){
         var paciente = CriarPaciente();
-        var dataHora = DateTime.UtcNow;
+        var dataHora = DateTime.Now;
         var descricao = "Consulta de rotina.";
         var status = StatusEnum.Ativo;
 
@@ -27,14 +27,14 @@ public class AtendimentoTests{
         var paciente = CriarPaciente();
         var descricao = "Consulta inicial\nPaciente com queixas de dor abdominal\nPrescrição realizada";
 
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow, descricao, StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.Now, descricao, StatusEnum.Ativo);
 
         atendimento.Descricao.Should().Be(descricao);
     }
 
     [Fact]
     public void Atendimento_Deve_Ter_Um_Id_Valido(){
-        var atendimento = new Atendimento(CriarPaciente(), DateTime.UtcNow, "Descrição", StatusEnum.Ativo);
+        var atendimento = new Atendimento(CriarPaciente(), DateTime.Now, "Descrição", StatusEnum.Ativo);
 
         atendimento.Id.Should().NotBe(Guid.Empty);
     }
@@ -44,7 +44,7 @@ public class AtendimentoTests{
     [InlineData(StatusEnum.Inativo)]
     public void Deve_Criar_Atendimento_Com_Todos_Os_Status(StatusEnum status){
         var paciente = CriarPaciente();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow, "Descrição", status);
+        var atendimento = new Atendimento(paciente, DateTime.Now, "Descrição", status);
 
         atendimento.Status.Should().Be(status);
     }
@@ -52,7 +52,7 @@ public class AtendimentoTests{
     [Fact]
     public void Deve_Criar_Atendimento_Com_Descricao_Vazia(){
         var paciente = CriarPaciente();
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow, "", StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.Now, "", StatusEnum.Ativo);
 
         atendimento.Descricao.Should().Be("");
     }
@@ -60,7 +60,7 @@ public class AtendimentoTests{
     [Fact]
     public void Deve_Criar_Atendimento_Com_Data_Hora_Passada(){
         var paciente = CriarPaciente();
-        var dataHoraPassada = DateTime.UtcNow.AddDays(-1);
+        var dataHoraPassada = DateTime.Now.AddDays(-1);
         var atendimento = new Atendimento(paciente, dataHoraPassada, "Consulta passada", StatusEnum.Ativo);
 
         atendimento.DataHora.Should().Be(dataHoraPassada);
@@ -69,7 +69,7 @@ public class AtendimentoTests{
     [Fact]
     public void Nao_Deve_Permitir_Atendimento_Com_Data_Futura(){
         var paciente = CriarPaciente();
-        var dataHoraFutura = DateTime.UtcNow.AddHours(1);
+        var dataHoraFutura = DateTime.Now.AddHours(1);
 
         var act = () => { new Atendimento(paciente, dataHoraFutura, "Consulta futura", StatusEnum.Ativo); };
 
@@ -80,7 +80,7 @@ public class AtendimentoTests{
     public void Deve_Criar_Atendimento_Com_Descricao_Com_Caracteres_Especiais(){
         var paciente = CriarPaciente();
         const string descricao = "Consulta com caracteres especiais: áéíóú çãõ ñ";
-        var atendimento = new Atendimento(paciente, DateTime.UtcNow, descricao, StatusEnum.Ativo);
+        var atendimento = new Atendimento(paciente, DateTime.Now, descricao, StatusEnum.Ativo);
 
         atendimento.Descricao.Should().Be(descricao);
     }
