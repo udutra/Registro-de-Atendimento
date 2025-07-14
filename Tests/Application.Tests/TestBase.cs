@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using RegistroDeAtendimento.Domain.Entities;
-using RegistroDeAtendimento.Domain.Enums;
-using RegistroDeAtendimento.Domain.ValueObjects;
+using RegistroDeAtendimento.Core.Domain.Entities;
+using RegistroDeAtendimento.Core.Domain.Enums;
+using RegistroDeAtendimento.Core.Domain.ValueObjects;
 using RegistroDeAtendimento.Infrastructure.Data;
 
 namespace RegistroDeAtendimento.Tests;

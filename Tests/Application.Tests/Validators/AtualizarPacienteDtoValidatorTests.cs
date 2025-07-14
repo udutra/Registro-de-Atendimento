@@ -1,7 +1,7 @@
 using FluentValidation.TestHelper;
-using RegistroDeAtendimento.Application.Dtos;
-using RegistroDeAtendimento.Application.Validators;
-using RegistroDeAtendimento.Domain.Enums;
+using RegistroDeAtendimento.Core.Domain.Enums;
+using RegistroDeAtendimento.Shared.Application.Dtos;
+using RegistroDeAtendimento.Shared.Application.Validators;
 
 namespace RegistroDeAtendimento.Tests.Validators;
 

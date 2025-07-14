@@ -22,6 +22,7 @@
     <ItemGroup>
         <ProjectReference Include="..\RegistroDeAtendimento.Application\RegistroDeAtendimento.Application.csproj"/>
         <ProjectReference Include="..\RegistroDeAtendimento.Infrastructure\RegistroDeAtendimento.Infrastructure.csproj"/>
+        <ProjectReference Include="..\RegistroDeAtendimento.Shared\RegistroDeAtendimento.Shared.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using RegistroDeAtendimento.Domain.Entities;
-using RegistroDeAtendimento.Domain.Enums;
-using RegistroDeAtendimento.Domain.ValueObjects;
+using RegistroDeAtendimento.Core.Domain.Entities;
+using RegistroDeAtendimento.Core.Domain.Enums;
+using RegistroDeAtendimento.Core.Domain.ValueObjects;
 using RegistroDeAtendimento.Infrastructure.Data;
 
 namespace Infrastructure.Tests;
@@ -33,10 +33,12 @@ public abstract class TestBase : IDisposable{
         return paciente;
     }
 
-    protected async Task CriarAtendimentoAsync(Paciente paciente, string descricao = "Consulta de rotina"){
+    protected async Task<Atendimento> CriarAtendimentoAsync(Paciente paciente, string descricao = "Consulta de rotina"){
         var atendimento = new Atendimento(paciente, DateTime.UtcNow, descricao, StatusEnum.Ativo);
 
         Context.Atendimentos.Add(atendimento);
         await Context.SaveChangesAsync();
+        return atendimento;
+
     }
 }

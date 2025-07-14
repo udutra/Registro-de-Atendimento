@@ -1,8 +1,9 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
-using RegistroDeAtendimento.Application.Dtos;
-using RegistroDeAtendimento.Domain.Enums;
+using RegistroDeAtendimento.Api;
+using RegistroDeAtendimento.Core.Domain.Enums;
+using RegistroDeAtendimento.Shared.Application.Dtos;
 
 namespace Api.Tests.Controllers;
 

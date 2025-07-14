@@ -1,12 +1,12 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using RegistroDeAtendimento.Application.Dtos;
-using RegistroDeAtendimento.Application.Dtos.Responses;
-using RegistroDeAtendimento.Application.Interfaces;
-using RegistroDeAtendimento.Domain.Entities;
-using RegistroDeAtendimento.Domain.Enums;
-using RegistroDeAtendimento.Domain.Exceptions;
+using RegistroDeAtendimento.Core.Domain.Entities;
+using RegistroDeAtendimento.Core.Domain.Enums;
+using RegistroDeAtendimento.Core.Domain.Exceptions;
 using RegistroDeAtendimento.Domain.Interfaces;
+using RegistroDeAtendimento.Shared.Application.Dtos;
+using RegistroDeAtendimento.Shared.Application.Dtos.Responses;
+using RegistroDeAtendimento.Shared.Application.Interfaces;
 
 namespace RegistroDeAtendimento.Application.Services;
 

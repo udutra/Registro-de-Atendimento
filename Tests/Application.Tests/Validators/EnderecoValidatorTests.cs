@@ -1,6 +1,6 @@
 using FluentValidation.TestHelper;
-using RegistroDeAtendimento.Application.Validators;
-using RegistroDeAtendimento.Domain.ValueObjects;
+using RegistroDeAtendimento.Core.Domain.ValueObjects;
+using RegistroDeAtendimento.Domain.Validators;
 
 namespace RegistroDeAtendimento.Tests.Validators;
 

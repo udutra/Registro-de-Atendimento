@@ -1,5 +1,5 @@
 using FluentAssertions;
-using RegistroDeAtendimento.Domain.Entities;
+using RegistroDeAtendimento.Core.Domain.Entities;
 
 namespace Domain.Tests.Entities;
 

@@ -1,5 +1,5 @@
 using FluentAssertions;
-using RegistroDeAtendimento.Domain.ValueObjects;
+using RegistroDeAtendimento.Core.Domain.ValueObjects;
 
 namespace Domain.Tests.ValueObjects;
 

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using RegistroDeAtendimento.Domain.Entities;
+using RegistroDeAtendimento.Core.Domain.Entities;
 
 namespace RegistroDeAtendimento.Infrastructure.Data;
 

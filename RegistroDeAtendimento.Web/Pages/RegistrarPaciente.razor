@@ -1,0 +1,31 @@
+@page "/registrar-paciente"
+@using RegistroDeAtendimento.Core.Domain.Enums
+
+<MudPaper Class="pa-4">
+    <MudText Typo="Typo.h5">Registrar Paciente</MudText>
+    
+    <MudForm Model="@Paciente" @ref="_form" Validation="@(_criarPacienteDtoValidator.ValidateValue)" ValidationDelay="0">
+        <MudTextField @bind-Value="Paciente.Nome" Label="Nome" Immediate="true" For="@(() => Paciente.Nome)" />
+        <MudTextField @bind-Value="Paciente.Cpf" Label="Cpf" Immediate="true" For="@(() => Paciente.Cpf)" />
+        <MudDatePicker Label="Data de Nascimento" @bind-Date="@_date"/>
+        <MudRadioGroup T="SexoEnum" @bind-Value="Paciente.Sexo" For="@(() => Paciente.Sexo)">
+            @foreach (SexoEnum item in Enum.GetValues(typeof(SexoEnum)))
+            {
+                <MudRadio T="SexoEnum" Value="@item">@item.ToString()</MudRadio>
+            }
+        </MudRadioGroup>
+        <MudTextField @bind-Value="Paciente.Cep" Label="Cep" Immediate="true" For="@(() => Paciente.Cep)" />
+        <MudTextField @bind-Value="Paciente.Cidade" Label="Cidade" Immediate="true" For="@(() => Paciente.Cidade)" />
+        <MudTextField @bind-Value="Paciente.Bairro" Label="Bairro" Immediate="true" For="@(() => Paciente.Bairro)" />
+        <MudTextField @bind-Value="Paciente.Logradouro" Label="Logradouro" Immediate="true" For="@(() => Paciente.Logradouro)" />
+        <MudTextField @bind-Value="Paciente.Complemento" Label="Complemento" Immediate="true" For="@(() => Paciente.Complemento)" />
+        <MudRadioGroup T="StatusEnum" @bind-Value="Paciente.Status" For="@(() => Paciente.Status)">
+            @foreach (StatusEnum item in Enum.GetValues(typeof(StatusEnum)))
+            {
+                <MudRadio T="StatusEnum" Value="@item">@item.ToString()</MudRadio>
+            }
+        </MudRadioGroup>
+        
+        <MudButton OnClick="@Submit" Color="Color.Primary">Registrar</MudButton>
+    </MudForm>
+</MudPaper>

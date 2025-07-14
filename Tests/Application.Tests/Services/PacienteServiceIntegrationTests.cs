@@ -1,10 +1,10 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using RegistroDeAtendimento.Application.Dtos;
 using RegistroDeAtendimento.Application.Services;
-using RegistroDeAtendimento.Application.Validators;
-using RegistroDeAtendimento.Domain.Enums;
+using RegistroDeAtendimento.Core.Domain.Enums;
 using RegistroDeAtendimento.Infrastructure.Repositories;
+using RegistroDeAtendimento.Shared.Application.Dtos;
+using RegistroDeAtendimento.Shared.Application.Validators;
 
 namespace RegistroDeAtendimento.Tests.Services;
 

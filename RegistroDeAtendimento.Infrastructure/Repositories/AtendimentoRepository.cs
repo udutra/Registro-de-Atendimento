@@ -1,5 +1,7 @@
+
+
 using Microsoft.EntityFrameworkCore;
-using RegistroDeAtendimento.Domain.Entities;
+using RegistroDeAtendimento.Core.Domain.Entities;
 using RegistroDeAtendimento.Domain.Interfaces;
 using RegistroDeAtendimento.Infrastructure.Data;
 

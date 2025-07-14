@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using RegistroDeAtendimento.Application.Dtos;
-using RegistroDeAtendimento.Application.Interfaces;
+using RegistroDeAtendimento.Shared.Application.Dtos;
+using RegistroDeAtendimento.Shared.Application.Interfaces;
+
 namespace RegistroDeAtendimento.Api.Controllers;
 
 [ApiController]

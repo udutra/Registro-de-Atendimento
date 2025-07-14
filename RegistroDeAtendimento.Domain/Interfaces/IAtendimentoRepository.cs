@@ -1,4 +1,4 @@
-using RegistroDeAtendimento.Domain.Entities;
+using RegistroDeAtendimento.Core.Domain.Entities;
 
 namespace RegistroDeAtendimento.Domain.Interfaces;
 

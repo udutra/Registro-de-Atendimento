@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using RegistroDeAtendimento.Application.Dtos;
-using RegistroDeAtendimento.Application.Dtos.Responses;
-using RegistroDeAtendimento.Application.Interfaces;
-using RegistroDeAtendimento.Domain.Enums;
+using RegistroDeAtendimento.Shared.Application.Dtos;
+using RegistroDeAtendimento.Shared.Application.Interfaces;
 
 namespace RegistroDeAtendimento.Api.Controllers;
 

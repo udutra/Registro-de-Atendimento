@@ -6,4 +6,17 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="FluentValidation" Version="12.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Application\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\RegistroDeAtendimento.Core\RegistroDeAtendimento.Core.csproj" />
+      <ProjectReference Include="..\RegistroDeAtendimento.Domain\RegistroDeAtendimento.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
